@@ -1,0 +1,245 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum MessageStatus {
+  NEW
+  REPLIED
+  ARCHIVED
+}
+
+model Admin {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String
+  passwordHash   String
+  sessionVersion Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  publicId  String   @unique
+  width     Int
+  height    Int
+  bytes     Int
+  format    String   @default("webp")
+  alt       String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  heroImages       Hero[]
+  aboutCovers      AboutPage[]
+  teamPhotos       TeamMember[]
+  partnerLogos     Partner[]
+  portfolioCovers  PortfolioProject[]
+  portfolioImages  PortfolioImage[]
+  articleCovers    Article[]
+
+  @@map("media")
+}
+
+model SiteSetting {
+  id           String   @id @default("main")
+  companyName  String
+  tagline      String   @default("")
+  address      String
+  phone        String
+  whatsapp     String
+  email        String
+  openingHours String
+  mapQuery     String
+  instagramUrl String?
+  linkedinUrl  String?
+  youtubeUrl   String?
+  seoTitle     String
+  seoDescription String
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Hero {
+  id                 String   @id @default("main")
+  eyebrow            String
+  heading            String
+  headingAccent      String
+  description        String
+  primaryLabel       String
+  primaryHref        String
+  secondaryLabel     String?
+  secondaryHref      String?
+  imageId            String?
+  image              Media?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  captionTitle       String?
+  captionMeta        String?
+  updatedAt          DateTime @updatedAt
+
+  @@map("hero")
+}
+
+model AboutPage {
+  id          String   @id @default("main")
+  title       String
+  subtitle    String
+  contentHtml String   @default("") @db.Text
+  vision      String   @default("") @db.Text
+  mission     String   @default("") @db.Text
+  foundedYear Int?
+  coverId     String?
+  cover       Media?   @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  updatedAt   DateTime @updatedAt
+
+  @@map("about_page")
+}
+
+model TeamMember {
+  id           String   @id @default(cuid())
+  name         String
+  position     String
+  bio          String?  @db.Text
+  photoId      String?
+  photo        Media?   @relation(fields: [photoId], references: [id], onDelete: SetNull)
+  instagramUrl String?
+  linkedinUrl  String?
+  sortOrder    Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@map("team_members")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  iconKey     String
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projects PortfolioProject[]
+
+  @@index([isPublished, sortOrder])
+  @@map("services")
+}
+
+model Partner {
+  id          String   @id @default(cuid())
+  name        String
+  logoId      String?
+  logo        Media?   @relation(fields: [logoId], references: [id], onDelete: SetNull)
+  websiteUrl  String?
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@map("partners")
+}
+
+model PortfolioProject {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  summary     String        @db.Text
+  contentHtml String        @default("") @db.Text
+  city        String
+  year        Int
+  guestCount  Int?
+  coverId     String?
+  cover       Media?        @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  serviceId   String?
+  service     Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  status      PublishStatus @default(DRAFT)
+  isFeatured  Boolean       @default(false)
+  publishedAt DateTime?
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  images PortfolioImage[]
+
+  @@index([status, isFeatured, sortOrder])
+  @@index([status, publishedAt])
+  @@map("portfolio_projects")
+}
+
+model PortfolioImage {
+  id        String           @id @default(cuid())
+  projectId String
+  project   PortfolioProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     Media            @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  sortOrder Int              @default(0)
+
+  @@unique([projectId, mediaId])
+  @@index([projectId, sortOrder])
+  @@map("portfolio_images")
+}
+
+model Article {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  excerpt        String        @db.Text
+  contentHtml    String        @default("") @db.Text
+  category       String
+  coverId        String?
+  cover          Media?        @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  readingMinutes Int           @default(1)
+  status         PublishStatus @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+  @@map("articles")
+}
+
+model Faq {
+  id          String   @id @default(cuid())
+  question    String
+  answer      String   @db.Text
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@map("faqs")
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  whatsapp  String
+  email     String?
+  eventType String
+  eventDate DateTime?     @db.Date
+  message   String?       @db.Text
+  status    MessageStatus @default(NEW)
+  readAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  @@index([status, createdAt])
+  @@map("contact_messages")
+}
