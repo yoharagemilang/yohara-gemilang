@@ -28,10 +28,12 @@ export type AggregateAdmin = {
 
 export type AdminAvgAggregateOutputType = {
   sessionVersion: number | null
+  failedLogins: number | null
 }
 
 export type AdminSumAggregateOutputType = {
   sessionVersion: number | null
+  failedLogins: number | null
 }
 
 export type AdminMinAggregateOutputType = {
@@ -40,6 +42,8 @@ export type AdminMinAggregateOutputType = {
   name: string | null
   passwordHash: string | null
   sessionVersion: number | null
+  failedLogins: number | null
+  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +54,8 @@ export type AdminMaxAggregateOutputType = {
   name: string | null
   passwordHash: string | null
   sessionVersion: number | null
+  failedLogins: number | null
+  lockedUntil: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +66,8 @@ export type AdminCountAggregateOutputType = {
   name: number
   passwordHash: number
   sessionVersion: number
+  failedLogins: number
+  lockedUntil: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -68,10 +76,12 @@ export type AdminCountAggregateOutputType = {
 
 export type AdminAvgAggregateInputType = {
   sessionVersion?: true
+  failedLogins?: true
 }
 
 export type AdminSumAggregateInputType = {
   sessionVersion?: true
+  failedLogins?: true
 }
 
 export type AdminMinAggregateInputType = {
@@ -80,6 +90,8 @@ export type AdminMinAggregateInputType = {
   name?: true
   passwordHash?: true
   sessionVersion?: true
+  failedLogins?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +102,8 @@ export type AdminMaxAggregateInputType = {
   name?: true
   passwordHash?: true
   sessionVersion?: true
+  failedLogins?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +114,8 @@ export type AdminCountAggregateInputType = {
   name?: true
   passwordHash?: true
   sessionVersion?: true
+  failedLogins?: true
+  lockedUntil?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -197,6 +213,8 @@ export type AdminGroupByOutputType = {
   name: string
   passwordHash: string
   sessionVersion: number
+  failedLogins: number
+  lockedUntil: Date | null
   createdAt: Date
   updatedAt: Date
   _count: AdminCountAggregateOutputType | null
@@ -230,6 +248,8 @@ export type AdminWhereInput = {
   name?: Prisma.StringFilter<"Admin"> | string
   passwordHash?: Prisma.StringFilter<"Admin"> | string
   sessionVersion?: Prisma.IntFilter<"Admin"> | number
+  failedLogins?: Prisma.IntFilter<"Admin"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
 }
@@ -240,6 +260,8 @@ export type AdminOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -253,6 +275,8 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Admin"> | string
   passwordHash?: Prisma.StringFilter<"Admin"> | string
   sessionVersion?: Prisma.IntFilter<"Admin"> | number
+  failedLogins?: Prisma.IntFilter<"Admin"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
 }, "id" | "email">
@@ -263,6 +287,8 @@ export type AdminOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AdminCountOrderByAggregateInput
@@ -281,6 +307,8 @@ export type AdminScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Admin"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"Admin"> | string
   sessionVersion?: Prisma.IntWithAggregatesFilter<"Admin"> | number
+  failedLogins?: Prisma.IntWithAggregatesFilter<"Admin"> | number
+  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
 }
@@ -291,6 +319,8 @@ export type AdminCreateInput = {
   name: string
   passwordHash: string
   sessionVersion?: number
+  failedLogins?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -301,6 +331,8 @@ export type AdminUncheckedCreateInput = {
   name: string
   passwordHash: string
   sessionVersion?: number
+  failedLogins?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -311,6 +343,8 @@ export type AdminUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  failedLogins?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -321,6 +355,8 @@ export type AdminUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  failedLogins?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -331,6 +367,8 @@ export type AdminCreateManyInput = {
   name: string
   passwordHash: string
   sessionVersion?: number
+  failedLogins?: number
+  lockedUntil?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -341,6 +379,8 @@ export type AdminUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  failedLogins?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -351,6 +391,8 @@ export type AdminUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   sessionVersion?: Prisma.IntFieldUpdateOperationsInput | number
+  failedLogins?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,12 +403,15 @@ export type AdminCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AdminAvgOrderByAggregateInput = {
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
 }
 
 export type AdminMaxOrderByAggregateInput = {
@@ -375,6 +420,8 @@ export type AdminMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -385,12 +432,15 @@ export type AdminMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AdminSumOrderByAggregateInput = {
   sessionVersion?: Prisma.SortOrder
+  failedLogins?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -405,6 +455,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -417,6 +471,8 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   passwordHash?: boolean
   sessionVersion?: boolean
+  failedLogins?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -427,6 +483,8 @@ export type AdminSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   passwordHash?: boolean
   sessionVersion?: boolean
+  failedLogins?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -437,6 +495,8 @@ export type AdminSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   passwordHash?: boolean
   sessionVersion?: boolean
+  failedLogins?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -447,11 +507,13 @@ export type AdminSelectScalar = {
   name?: boolean
   passwordHash?: boolean
   sessionVersion?: boolean
+  failedLogins?: boolean
+  lockedUntil?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "sessionVersion" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "sessionVersion" | "failedLogins" | "lockedUntil" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
 
 export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Admin"
@@ -462,6 +524,8 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     passwordHash: string
     sessionVersion: number
+    failedLogins: number
+    lockedUntil: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["admin"]>
@@ -892,6 +956,8 @@ export interface AdminFieldRefs {
   readonly name: Prisma.FieldRef<"Admin", 'String'>
   readonly passwordHash: Prisma.FieldRef<"Admin", 'String'>
   readonly sessionVersion: Prisma.FieldRef<"Admin", 'Int'>
+  readonly failedLogins: Prisma.FieldRef<"Admin", 'Int'>
+  readonly lockedUntil: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Admin", 'DateTime'>
 }

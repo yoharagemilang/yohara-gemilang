@@ -1436,6 +1436,8 @@ export const AdminScalarFieldEnum = {
   name: 'name',
   passwordHash: 'passwordHash',
   sessionVersion: 'sessionVersion',
+  failedLogins: 'failedLogins',
+  lockedUntil: 'lockedUntil',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

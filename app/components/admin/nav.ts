@@ -1,0 +1,30 @@
+// app/components/admin/nav.ts
+// ready: false = modul belum dibuat, tampil redup. Ubah jadi true tiap modul selesai.
+export const adminNav = [
+  {
+    label: 'Umum',
+    items: [{ to: '/admin', label: 'Dashboard', icon: 'layout', ready: true }],
+  },
+  {
+    label: 'Konten',
+    items: [
+      { to: '/admin/hero', label: 'Hero', icon: 'image', ready: false },
+      { to: '/admin/layanan', label: 'Layanan', icon: 'briefcase', ready: false },
+      { to: '/admin/partner', label: 'Partner', icon: 'handshake', ready: false },
+      { to: '/admin/portofolio', label: 'Portofolio', icon: 'folder', ready: false },
+      { to: '/admin/artikel', label: 'Artikel', icon: 'file', ready: false },
+      { to: '/admin/faq', label: 'FAQ', icon: 'help', ready: false },
+      { to: '/admin/tentang', label: 'Tentang', icon: 'info', ready: false },
+      { to: '/admin/tim', label: 'Tim', icon: 'users', ready: false },
+    ],
+  },
+  {
+    label: 'Pengelolaan',
+    items: [
+      { to: '/admin/pesan', label: 'Pesan', icon: 'mail', ready: false },
+      { to: '/admin/pengaturan', label: 'Pengaturan', icon: 'settings', ready: false },
+    ],
+  },
+] as const;
+
+export type NavIcon = (typeof adminNav)[number]['items'][number]['icon'];
