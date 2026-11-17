@@ -3,8 +3,18 @@ import { type RouteConfig, index, layout, route } from '@react-router/dev/routes
 
 export default [
   // Publik
-  index('routes/public/home.tsx'),
-  route('healthz', 'routes/public/health.tsx'),
+  layout('routes/public/layout.tsx', [
+    index('routes/public/home.tsx'),
+    route('tentang', 'routes/public/tentang.tsx'),
+    route('layanan', 'routes/public/layanan.tsx'),
+    route('portofolio', 'routes/public/portofolio.tsx'),
+    route('artikel', 'routes/public/artikel.tsx'),
+    route('faq', 'routes/public/faq.tsx'),
+    route('kontak', 'routes/public/kontak.tsx'),
+    route('kebijakan-privasi', 'routes/public/kebijakan-privasi.tsx'),
+    // route('syarat-ketentuan', 'routes/public/syarat-ketentuan.tsx'),
+    route('*', 'routes/public/not-found.tsx'),
+  ]),
 
   // Admin: masuk dan keluar tanpa layout
   route('admin/login', 'routes/admin/login.tsx'),
