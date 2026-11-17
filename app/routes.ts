@@ -19,6 +19,8 @@ export default [
     route('admin/faq', 'routes/admin/faq.tsx'),
     route('admin/tentang', 'routes/admin/tentang.tsx'),
     route('admin/tim', 'routes/admin/tim.tsx'),
+    route('admin/portofolio', 'routes/admin/portofolio.tsx'),
+    route('admin/portofolio/:slug', 'routes/admin/portofolio-form.tsx'),
     route('admin/media', 'routes/admin/media.tsx'),
     route('admin/api/media', 'routes/admin/api-media.tsx'),
     route('admin/api/upload-sign', 'routes/admin/api-upload-sign.tsx'),

@@ -1,5 +1,6 @@
 // app/components/admin/use-action-feedback.ts
 import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 
 import type { ActionResult } from '~/schemas/common';
@@ -27,4 +28,25 @@ export function useFreshErrors(result: ActionResult | undefined): Record<string,
   const initial = useRef(result);
   if (result === initial.current || !result || result.ok) return {};
   return result.errors ?? {};
+}
+
+/**
+ * Toast dari parameter ?info=... setelah redirect (mis. setelah membuat atau menghapus).
+ * Parameternya dibuang dari alamat supaya tidak muncul lagi saat dimuat ulang.
+ */
+export function useFlashToast(messages: Record<string, string>) {
+  const [params, setParams] = useSearchParams();
+  const info = params.get('info');
+  useEffect(() => {
+    if (!info) return;
+    const message = messages[info];
+    if (message) toast.success(message, { id: `flash-${info}` });
+    setParams(
+      (prev) => {
+        prev.delete('info');
+        return prev;
+      },
+      { replace: true },
+    );
+  }, [info]);
 }
