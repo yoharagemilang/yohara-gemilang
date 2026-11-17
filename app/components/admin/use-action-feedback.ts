@@ -12,7 +12,7 @@ export function useActionToast(result: ActionResult | undefined, onOk?: () => vo
     if (!result || handled.current === result) return;
     handled.current = result;
     if (result.ok) {
-      toast.success(result.message);
+      if (result.message) toast.success(result.message); // pesan kosong = aksi senyap
       onOk?.();
     } else if (result.message) {
       toast.error(result.message);

@@ -22,8 +22,8 @@ export const adminNav = [
   {
     label: 'Pengelolaan',
     items: [
-      { to: '/admin/pesan', label: 'Pesan', icon: 'mail', ready: false },
-      { to: '/admin/pengaturan', label: 'Pengaturan', icon: 'settings', ready: false },
+      { to: '/admin/pesan', label: 'Pesan', icon: 'mail', ready: true },
+      { to: '/admin/pengaturan', label: 'Pengaturan', icon: 'settings', ready: true },
     ],
   },
 ] as const;
