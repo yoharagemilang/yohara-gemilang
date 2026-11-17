@@ -13,6 +13,11 @@ enum PublishStatus {
   PUBLISHED
 }
 
+enum MediaKind {
+  IMAGE
+  VIDEO
+}
+
 enum MessageStatus {
   NEW
   REPLIED
@@ -25,7 +30,7 @@ model Admin {
   name           String
   passwordHash   String
   sessionVersion Int      @default(0)
-  failedLogins   Int       @default(0)
+  failedLogins   Int      @default(0)
   lockedUntil    DateTime?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -40,11 +45,13 @@ model Media {
   height    Int
   bytes     Int
   format    String   @default("webp")
+  kind      MediaKind @default(IMAGE)
+  duration  Float?
   alt       String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  heroImages       Hero[]
+  heroSlides       HeroSlide[]
   aboutCovers      AboutPage[]
   teamPhotos       TeamMember[]
   partnerLogos     Partner[]
@@ -76,22 +83,35 @@ model SiteSetting {
 }
 
 model Hero {
-  id                 String   @id @default("main")
-  eyebrow            String
-  heading            String
-  headingAccent      String
-  description        String
-  primaryLabel       String
-  primaryHref        String
-  secondaryLabel     String?
-  secondaryHref      String?
-  imageId            String?
-  image              Media?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
-  captionTitle       String?
-  captionMeta        String?
-  updatedAt          DateTime @updatedAt
+  id             String   @id @default("main")
+  eyebrow        String
+  heading        String
+  headingAccent  String
+  description    String
+  primaryLabel   String
+  primaryHref    String
+  secondaryLabel String?
+  secondaryHref  String?
+  updatedAt      DateTime @updatedAt
+
+  slides HeroSlide[]
 
   @@map("hero")
+}
+
+model HeroSlide {
+  id           String   @id @default(cuid())
+  heroId       String   @default("main")
+  hero         Hero     @relation(fields: [heroId], references: [id], onDelete: Cascade)
+  mediaId      String
+  media        Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  captionTitle String?
+  captionMeta  String?
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([heroId, sortOrder])
+  @@map("hero_slides")
 }
 
 model AboutPage {

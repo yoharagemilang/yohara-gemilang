@@ -64,8 +64,6 @@ async function seedSingletons() {
       primaryHref: '/kontak',
       secondaryLabel: 'Lihat portofolio',
       secondaryHref: '/portofolio',
-      captionTitle: 'Gala Dinner 640 tamu',
-      captionMeta: 'Medan, Oktober 2026',
     },
   });
 

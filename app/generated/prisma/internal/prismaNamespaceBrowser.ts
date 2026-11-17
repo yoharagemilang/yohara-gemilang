@@ -55,6 +55,7 @@ export const ModelName = {
   Media: 'Media',
   SiteSetting: 'SiteSetting',
   Hero: 'Hero',
+  HeroSlide: 'HeroSlide',
   AboutPage: 'AboutPage',
   TeamMember: 'TeamMember',
   Service: 'Service',
@@ -104,6 +105,8 @@ export const MediaScalarFieldEnum = {
   height: 'height',
   bytes: 'bytes',
   format: 'format',
+  kind: 'kind',
+  duration: 'duration',
   alt: 'alt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -143,13 +146,23 @@ export const HeroScalarFieldEnum = {
   primaryHref: 'primaryHref',
   secondaryLabel: 'secondaryLabel',
   secondaryHref: 'secondaryHref',
-  imageId: 'imageId',
-  captionTitle: 'captionTitle',
-  captionMeta: 'captionMeta',
   updatedAt: 'updatedAt'
 } as const
 
 export type HeroScalarFieldEnum = (typeof HeroScalarFieldEnum)[keyof typeof HeroScalarFieldEnum]
+
+
+export const HeroSlideScalarFieldEnum = {
+  id: 'id',
+  heroId: 'heroId',
+  mediaId: 'mediaId',
+  captionTitle: 'captionTitle',
+  captionMeta: 'captionMeta',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type HeroSlideScalarFieldEnum = (typeof HeroSlideScalarFieldEnum)[keyof typeof HeroSlideScalarFieldEnum]
 
 
 export const AboutPageScalarFieldEnum = {

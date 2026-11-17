@@ -401,6 +401,7 @@ export const ModelName = {
   Media: 'Media',
   SiteSetting: 'SiteSetting',
   Hero: 'Hero',
+  HeroSlide: 'HeroSlide',
   AboutPage: 'AboutPage',
   TeamMember: 'TeamMember',
   Service: 'Service',
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "media" | "siteSetting" | "hero" | "aboutPage" | "teamMember" | "service" | "partner" | "portfolioProject" | "portfolioImage" | "article" | "faq" | "contactMessage"
+    modelProps: "admin" | "media" | "siteSetting" | "hero" | "heroSlide" | "aboutPage" | "teamMember" | "service" | "partner" | "portfolioProject" | "portfolioImage" | "article" | "faq" | "contactMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -722,6 +723,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.HeroCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.HeroCountAggregateOutputType> | number
+        }
+      }
+    }
+    HeroSlide: {
+      payload: Prisma.$HeroSlidePayload<ExtArgs>
+      fields: Prisma.HeroSlideFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HeroSlideFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HeroSlideFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        findFirst: {
+          args: Prisma.HeroSlideFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HeroSlideFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        findMany: {
+          args: Prisma.HeroSlideFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        create: {
+          args: Prisma.HeroSlideCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        createMany: {
+          args: Prisma.HeroSlideCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HeroSlideCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        delete: {
+          args: Prisma.HeroSlideDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        update: {
+          args: Prisma.HeroSlideUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        deleteMany: {
+          args: Prisma.HeroSlideDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HeroSlideUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HeroSlideUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>[]
+        }
+        upsert: {
+          args: Prisma.HeroSlideUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeroSlidePayload>
+        }
+        aggregate: {
+          args: Prisma.HeroSlideAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHeroSlide>
+        }
+        groupBy: {
+          args: Prisma.HeroSlideGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroSlideGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HeroSlideCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeroSlideCountAggregateOutputType> | number
         }
       }
     }
@@ -1452,6 +1527,8 @@ export const MediaScalarFieldEnum = {
   height: 'height',
   bytes: 'bytes',
   format: 'format',
+  kind: 'kind',
+  duration: 'duration',
   alt: 'alt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1491,13 +1568,23 @@ export const HeroScalarFieldEnum = {
   primaryHref: 'primaryHref',
   secondaryLabel: 'secondaryLabel',
   secondaryHref: 'secondaryHref',
-  imageId: 'imageId',
-  captionTitle: 'captionTitle',
-  captionMeta: 'captionMeta',
   updatedAt: 'updatedAt'
 } as const
 
 export type HeroScalarFieldEnum = (typeof HeroScalarFieldEnum)[keyof typeof HeroScalarFieldEnum]
+
+
+export const HeroSlideScalarFieldEnum = {
+  id: 'id',
+  heroId: 'heroId',
+  mediaId: 'mediaId',
+  captionTitle: 'captionTitle',
+  captionMeta: 'captionMeta',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+} as const
+
+export type HeroSlideScalarFieldEnum = (typeof HeroSlideScalarFieldEnum)[keyof typeof HeroSlideScalarFieldEnum]
 
 
 export const AboutPageScalarFieldEnum = {
@@ -1712,6 +1799,34 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'MediaKind'
+ */
+export type EnumMediaKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaKind'>
+    
+
+
+/**
+ * Reference to a field of type 'MediaKind[]'
+ */
+export type ListEnumMediaKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1743,20 +1858,6 @@ export type EnumMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'MessageStatus[]'
  */
 export type ListEnumMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1914,6 +2015,7 @@ export type GlobalOmitConfig = {
   media?: Prisma.MediaOmit
   siteSetting?: Prisma.SiteSettingOmit
   hero?: Prisma.HeroOmit
+  heroSlide?: Prisma.HeroSlideOmit
   aboutPage?: Prisma.AboutPageOmit
   teamMember?: Prisma.TeamMemberOmit
   service?: Prisma.ServiceOmit

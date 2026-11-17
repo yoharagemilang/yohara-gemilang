@@ -5,7 +5,6 @@ import { AppSidebar } from '~/components/admin/app-sidebar';
 import { Separator } from '~/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar';
 import { Toaster } from '~/components/ui/sonner';
-import { TooltipProvider } from '~/components/ui/tooltip';
 import { db } from '~/lib/db.server';
 import { adminContext, adminHeaders, requireAdmin } from '~/middleware/auth.server';
 import type { Route } from './+types/layout';
@@ -24,21 +23,19 @@ export async function loader({ context }: Route.LoaderArgs) {
 
 export default function AdminLayout({ loaderData }: Route.ComponentProps) {
   return (
-    <TooltipProvider>
-      <SidebarProvider>
-        <AppSidebar admin={loaderData.admin} newMessages={loaderData.newMessages} />
-        <SidebarInset>
-          <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger />
-            <Separator orientation="vertical" className="h-4" />
-            <span className="text-sm text-muted-foreground">Panel Admin</span>
-          </header>
-          <div className="mx-auto w-full max-w-6xl p-4 md:p-8">
-            <Outlet />
-          </div>
-        </SidebarInset>
-        <Toaster />
-      </SidebarProvider>
-    </TooltipProvider>
+    <SidebarProvider>
+      <AppSidebar admin={loaderData.admin} newMessages={loaderData.newMessages} />
+      <SidebarInset>
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger />
+          <Separator orientation="vertical" className="h-4" />
+          <span className="text-sm text-muted-foreground">Panel Admin</span>
+        </header>
+        <div className="mx-auto w-full max-w-6xl p-4 md:p-8">
+          <Outlet />
+        </div>
+      </SidebarInset>
+      <Toaster richColors closeButton />
+    </SidebarProvider>
   );
 }

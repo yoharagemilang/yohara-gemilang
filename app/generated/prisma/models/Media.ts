@@ -30,12 +30,14 @@ export type MediaAvgAggregateOutputType = {
   width: number | null
   height: number | null
   bytes: number | null
+  duration: number | null
 }
 
 export type MediaSumAggregateOutputType = {
   width: number | null
   height: number | null
   bytes: number | null
+  duration: number | null
 }
 
 export type MediaMinAggregateOutputType = {
@@ -45,6 +47,8 @@ export type MediaMinAggregateOutputType = {
   height: number | null
   bytes: number | null
   format: string | null
+  kind: $Enums.MediaKind | null
+  duration: number | null
   alt: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +61,8 @@ export type MediaMaxAggregateOutputType = {
   height: number | null
   bytes: number | null
   format: string | null
+  kind: $Enums.MediaKind | null
+  duration: number | null
   alt: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +75,8 @@ export type MediaCountAggregateOutputType = {
   height: number
   bytes: number
   format: number
+  kind: number
+  duration: number
   alt: number
   createdAt: number
   updatedAt: number
@@ -80,12 +88,14 @@ export type MediaAvgAggregateInputType = {
   width?: true
   height?: true
   bytes?: true
+  duration?: true
 }
 
 export type MediaSumAggregateInputType = {
   width?: true
   height?: true
   bytes?: true
+  duration?: true
 }
 
 export type MediaMinAggregateInputType = {
@@ -95,6 +105,8 @@ export type MediaMinAggregateInputType = {
   height?: true
   bytes?: true
   format?: true
+  kind?: true
+  duration?: true
   alt?: true
   createdAt?: true
   updatedAt?: true
@@ -107,6 +119,8 @@ export type MediaMaxAggregateInputType = {
   height?: true
   bytes?: true
   format?: true
+  kind?: true
+  duration?: true
   alt?: true
   createdAt?: true
   updatedAt?: true
@@ -119,6 +133,8 @@ export type MediaCountAggregateInputType = {
   height?: true
   bytes?: true
   format?: true
+  kind?: true
+  duration?: true
   alt?: true
   createdAt?: true
   updatedAt?: true
@@ -218,6 +234,8 @@ export type MediaGroupByOutputType = {
   height: number
   bytes: number
   format: string
+  kind: $Enums.MediaKind
+  duration: number | null
   alt: string
   createdAt: Date
   updatedAt: Date
@@ -253,10 +271,12 @@ export type MediaWhereInput = {
   height?: Prisma.IntFilter<"Media"> | number
   bytes?: Prisma.IntFilter<"Media"> | number
   format?: Prisma.StringFilter<"Media"> | string
+  kind?: Prisma.EnumMediaKindFilter<"Media"> | $Enums.MediaKind
+  duration?: Prisma.FloatNullableFilter<"Media"> | number | null
   alt?: Prisma.StringFilter<"Media"> | string
   createdAt?: Prisma.DateTimeFilter<"Media"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Media"> | Date | string
-  heroImages?: Prisma.HeroListRelationFilter
+  heroSlides?: Prisma.HeroSlideListRelationFilter
   aboutCovers?: Prisma.AboutPageListRelationFilter
   teamPhotos?: Prisma.TeamMemberListRelationFilter
   partnerLogos?: Prisma.PartnerListRelationFilter
@@ -272,10 +292,12 @@ export type MediaOrderByWithRelationInput = {
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
   format?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
+  duration?: Prisma.SortOrderInput | Prisma.SortOrder
   alt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  heroImages?: Prisma.HeroOrderByRelationAggregateInput
+  heroSlides?: Prisma.HeroSlideOrderByRelationAggregateInput
   aboutCovers?: Prisma.AboutPageOrderByRelationAggregateInput
   teamPhotos?: Prisma.TeamMemberOrderByRelationAggregateInput
   partnerLogos?: Prisma.PartnerOrderByRelationAggregateInput
@@ -294,10 +316,12 @@ export type MediaWhereUniqueInput = Prisma.AtLeast<{
   height?: Prisma.IntFilter<"Media"> | number
   bytes?: Prisma.IntFilter<"Media"> | number
   format?: Prisma.StringFilter<"Media"> | string
+  kind?: Prisma.EnumMediaKindFilter<"Media"> | $Enums.MediaKind
+  duration?: Prisma.FloatNullableFilter<"Media"> | number | null
   alt?: Prisma.StringFilter<"Media"> | string
   createdAt?: Prisma.DateTimeFilter<"Media"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Media"> | Date | string
-  heroImages?: Prisma.HeroListRelationFilter
+  heroSlides?: Prisma.HeroSlideListRelationFilter
   aboutCovers?: Prisma.AboutPageListRelationFilter
   teamPhotos?: Prisma.TeamMemberListRelationFilter
   partnerLogos?: Prisma.PartnerListRelationFilter
@@ -313,6 +337,8 @@ export type MediaOrderByWithAggregationInput = {
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
   format?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
+  duration?: Prisma.SortOrderInput | Prisma.SortOrder
   alt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -333,6 +359,8 @@ export type MediaScalarWhereWithAggregatesInput = {
   height?: Prisma.IntWithAggregatesFilter<"Media"> | number
   bytes?: Prisma.IntWithAggregatesFilter<"Media"> | number
   format?: Prisma.StringWithAggregatesFilter<"Media"> | string
+  kind?: Prisma.EnumMediaKindWithAggregatesFilter<"Media"> | $Enums.MediaKind
+  duration?: Prisma.FloatNullableWithAggregatesFilter<"Media"> | number | null
   alt?: Prisma.StringWithAggregatesFilter<"Media"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Media"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Media"> | Date | string
@@ -345,10 +373,12 @@ export type MediaCreateInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
@@ -364,10 +394,12 @@ export type MediaUncheckedCreateInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
@@ -383,10 +415,12 @@ export type MediaUpdateInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
@@ -402,10 +436,12 @@ export type MediaUncheckedUpdateInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
@@ -421,6 +457,8 @@ export type MediaCreateManyInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -433,6 +471,8 @@ export type MediaUpdateManyMutationInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -445,6 +485,8 @@ export type MediaUncheckedUpdateManyInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,6 +499,8 @@ export type MediaCountOrderByAggregateInput = {
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
   format?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
   alt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -466,6 +510,7 @@ export type MediaAvgOrderByAggregateInput = {
   width?: Prisma.SortOrder
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
 }
 
 export type MediaMaxOrderByAggregateInput = {
@@ -475,6 +520,8 @@ export type MediaMaxOrderByAggregateInput = {
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
   format?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
   alt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -487,6 +534,8 @@ export type MediaMinOrderByAggregateInput = {
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
   format?: Prisma.SortOrder
+  kind?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
   alt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -496,11 +545,7 @@ export type MediaSumOrderByAggregateInput = {
   width?: Prisma.SortOrder
   height?: Prisma.SortOrder
   bytes?: Prisma.SortOrder
-}
-
-export type MediaNullableScalarRelationFilter = {
-  is?: Prisma.MediaWhereInput | null
-  isNot?: Prisma.MediaWhereInput | null
+  duration?: Prisma.SortOrder
 }
 
 export type MediaScalarRelationFilter = {
@@ -508,20 +553,35 @@ export type MediaScalarRelationFilter = {
   isNot?: Prisma.MediaWhereInput
 }
 
-export type MediaCreateNestedOneWithoutHeroImagesInput = {
-  create?: Prisma.XOR<Prisma.MediaCreateWithoutHeroImagesInput, Prisma.MediaUncheckedCreateWithoutHeroImagesInput>
-  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHeroImagesInput
+export type MediaNullableScalarRelationFilter = {
+  is?: Prisma.MediaWhereInput | null
+  isNot?: Prisma.MediaWhereInput | null
+}
+
+export type EnumMediaKindFieldUpdateOperationsInput = {
+  set?: $Enums.MediaKind
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type MediaCreateNestedOneWithoutHeroSlidesInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutHeroSlidesInput, Prisma.MediaUncheckedCreateWithoutHeroSlidesInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHeroSlidesInput
   connect?: Prisma.MediaWhereUniqueInput
 }
 
-export type MediaUpdateOneWithoutHeroImagesNestedInput = {
-  create?: Prisma.XOR<Prisma.MediaCreateWithoutHeroImagesInput, Prisma.MediaUncheckedCreateWithoutHeroImagesInput>
-  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHeroImagesInput
-  upsert?: Prisma.MediaUpsertWithoutHeroImagesInput
-  disconnect?: Prisma.MediaWhereInput | boolean
-  delete?: Prisma.MediaWhereInput | boolean
+export type MediaUpdateOneRequiredWithoutHeroSlidesNestedInput = {
+  create?: Prisma.XOR<Prisma.MediaCreateWithoutHeroSlidesInput, Prisma.MediaUncheckedCreateWithoutHeroSlidesInput>
+  connectOrCreate?: Prisma.MediaCreateOrConnectWithoutHeroSlidesInput
+  upsert?: Prisma.MediaUpsertWithoutHeroSlidesInput
   connect?: Prisma.MediaWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutHeroImagesInput, Prisma.MediaUpdateWithoutHeroImagesInput>, Prisma.MediaUncheckedUpdateWithoutHeroImagesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutHeroSlidesInput, Prisma.MediaUpdateWithoutHeroSlidesInput>, Prisma.MediaUncheckedUpdateWithoutHeroSlidesInput>
 }
 
 export type MediaCreateNestedOneWithoutAboutCoversInput = {
@@ -618,13 +678,15 @@ export type MediaUpdateOneWithoutArticleCoversNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MediaUpdateToOneWithWhereWithoutArticleCoversInput, Prisma.MediaUpdateWithoutArticleCoversInput>, Prisma.MediaUncheckedUpdateWithoutArticleCoversInput>
 }
 
-export type MediaCreateWithoutHeroImagesInput = {
+export type MediaCreateWithoutHeroSlidesInput = {
   id?: string
   publicId: string
   width: number
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -636,13 +698,15 @@ export type MediaCreateWithoutHeroImagesInput = {
   articleCovers?: Prisma.ArticleCreateNestedManyWithoutCoverInput
 }
 
-export type MediaUncheckedCreateWithoutHeroImagesInput = {
+export type MediaUncheckedCreateWithoutHeroSlidesInput = {
   id?: string
   publicId: string
   width: number
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -654,29 +718,31 @@ export type MediaUncheckedCreateWithoutHeroImagesInput = {
   articleCovers?: Prisma.ArticleUncheckedCreateNestedManyWithoutCoverInput
 }
 
-export type MediaCreateOrConnectWithoutHeroImagesInput = {
+export type MediaCreateOrConnectWithoutHeroSlidesInput = {
   where: Prisma.MediaWhereUniqueInput
-  create: Prisma.XOR<Prisma.MediaCreateWithoutHeroImagesInput, Prisma.MediaUncheckedCreateWithoutHeroImagesInput>
+  create: Prisma.XOR<Prisma.MediaCreateWithoutHeroSlidesInput, Prisma.MediaUncheckedCreateWithoutHeroSlidesInput>
 }
 
-export type MediaUpsertWithoutHeroImagesInput = {
-  update: Prisma.XOR<Prisma.MediaUpdateWithoutHeroImagesInput, Prisma.MediaUncheckedUpdateWithoutHeroImagesInput>
-  create: Prisma.XOR<Prisma.MediaCreateWithoutHeroImagesInput, Prisma.MediaUncheckedCreateWithoutHeroImagesInput>
+export type MediaUpsertWithoutHeroSlidesInput = {
+  update: Prisma.XOR<Prisma.MediaUpdateWithoutHeroSlidesInput, Prisma.MediaUncheckedUpdateWithoutHeroSlidesInput>
+  create: Prisma.XOR<Prisma.MediaCreateWithoutHeroSlidesInput, Prisma.MediaUncheckedCreateWithoutHeroSlidesInput>
   where?: Prisma.MediaWhereInput
 }
 
-export type MediaUpdateToOneWithWhereWithoutHeroImagesInput = {
+export type MediaUpdateToOneWithWhereWithoutHeroSlidesInput = {
   where?: Prisma.MediaWhereInput
-  data: Prisma.XOR<Prisma.MediaUpdateWithoutHeroImagesInput, Prisma.MediaUncheckedUpdateWithoutHeroImagesInput>
+  data: Prisma.XOR<Prisma.MediaUpdateWithoutHeroSlidesInput, Prisma.MediaUncheckedUpdateWithoutHeroSlidesInput>
 }
 
-export type MediaUpdateWithoutHeroImagesInput = {
+export type MediaUpdateWithoutHeroSlidesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
   width?: Prisma.IntFieldUpdateOperationsInput | number
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -688,13 +754,15 @@ export type MediaUpdateWithoutHeroImagesInput = {
   articleCovers?: Prisma.ArticleUpdateManyWithoutCoverNestedInput
 }
 
-export type MediaUncheckedUpdateWithoutHeroImagesInput = {
+export type MediaUncheckedUpdateWithoutHeroSlidesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
   width?: Prisma.IntFieldUpdateOperationsInput | number
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -713,10 +781,12 @@ export type MediaCreateWithoutAboutCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
   portfolioCovers?: Prisma.PortfolioProjectCreateNestedManyWithoutCoverInput
@@ -731,10 +801,12 @@ export type MediaUncheckedCreateWithoutAboutCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedCreateNestedManyWithoutCoverInput
@@ -765,10 +837,12 @@ export type MediaUpdateWithoutAboutCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUpdateManyWithoutCoverNestedInput
@@ -783,10 +857,12 @@ export type MediaUncheckedUpdateWithoutAboutCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedUpdateManyWithoutCoverNestedInput
@@ -801,10 +877,12 @@ export type MediaCreateWithoutTeamPhotosInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
   portfolioCovers?: Prisma.PortfolioProjectCreateNestedManyWithoutCoverInput
@@ -819,10 +897,12 @@ export type MediaUncheckedCreateWithoutTeamPhotosInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedCreateNestedManyWithoutCoverInput
@@ -853,10 +933,12 @@ export type MediaUpdateWithoutTeamPhotosInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUpdateManyWithoutCoverNestedInput
@@ -871,10 +953,12 @@ export type MediaUncheckedUpdateWithoutTeamPhotosInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedUpdateManyWithoutCoverNestedInput
@@ -889,10 +973,12 @@ export type MediaCreateWithoutPartnerLogosInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   portfolioCovers?: Prisma.PortfolioProjectCreateNestedManyWithoutCoverInput
@@ -907,10 +993,12 @@ export type MediaUncheckedCreateWithoutPartnerLogosInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedCreateNestedManyWithoutCoverInput
@@ -941,10 +1029,12 @@ export type MediaUpdateWithoutPartnerLogosInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUpdateManyWithoutCoverNestedInput
@@ -959,10 +1049,12 @@ export type MediaUncheckedUpdateWithoutPartnerLogosInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   portfolioCovers?: Prisma.PortfolioProjectUncheckedUpdateManyWithoutCoverNestedInput
@@ -977,10 +1069,12 @@ export type MediaCreateWithoutPortfolioCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
@@ -995,10 +1089,12 @@ export type MediaUncheckedCreateWithoutPortfolioCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
@@ -1029,10 +1125,12 @@ export type MediaUpdateWithoutPortfolioCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
@@ -1047,10 +1145,12 @@ export type MediaUncheckedUpdateWithoutPortfolioCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
@@ -1065,10 +1165,12 @@ export type MediaCreateWithoutPortfolioImagesInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
@@ -1083,10 +1185,12 @@ export type MediaUncheckedCreateWithoutPortfolioImagesInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
@@ -1117,10 +1221,12 @@ export type MediaUpdateWithoutPortfolioImagesInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
@@ -1135,10 +1241,12 @@ export type MediaUncheckedUpdateWithoutPortfolioImagesInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
@@ -1153,10 +1261,12 @@ export type MediaCreateWithoutArticleCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerCreateNestedManyWithoutLogoInput
@@ -1171,10 +1281,12 @@ export type MediaUncheckedCreateWithoutArticleCoversInput = {
   height: number
   bytes: number
   format?: string
+  kind?: $Enums.MediaKind
+  duration?: number | null
   alt?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  heroImages?: Prisma.HeroUncheckedCreateNestedManyWithoutImageInput
+  heroSlides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutMediaInput
   aboutCovers?: Prisma.AboutPageUncheckedCreateNestedManyWithoutCoverInput
   teamPhotos?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutPhotoInput
   partnerLogos?: Prisma.PartnerUncheckedCreateNestedManyWithoutLogoInput
@@ -1205,10 +1317,12 @@ export type MediaUpdateWithoutArticleCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUpdateManyWithoutLogoNestedInput
@@ -1223,10 +1337,12 @@ export type MediaUncheckedUpdateWithoutArticleCoversInput = {
   height?: Prisma.IntFieldUpdateOperationsInput | number
   bytes?: Prisma.IntFieldUpdateOperationsInput | number
   format?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumMediaKindFieldUpdateOperationsInput | $Enums.MediaKind
+  duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   alt?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  heroImages?: Prisma.HeroUncheckedUpdateManyWithoutImageNestedInput
+  heroSlides?: Prisma.HeroSlideUncheckedUpdateManyWithoutMediaNestedInput
   aboutCovers?: Prisma.AboutPageUncheckedUpdateManyWithoutCoverNestedInput
   teamPhotos?: Prisma.TeamMemberUncheckedUpdateManyWithoutPhotoNestedInput
   partnerLogos?: Prisma.PartnerUncheckedUpdateManyWithoutLogoNestedInput
@@ -1240,7 +1356,7 @@ export type MediaUncheckedUpdateWithoutArticleCoversInput = {
  */
 
 export type MediaCountOutputType = {
-  heroImages: number
+  heroSlides: number
   aboutCovers: number
   teamPhotos: number
   partnerLogos: number
@@ -1250,7 +1366,7 @@ export type MediaCountOutputType = {
 }
 
 export type MediaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  heroImages?: boolean | MediaCountOutputTypeCountHeroImagesArgs
+  heroSlides?: boolean | MediaCountOutputTypeCountHeroSlidesArgs
   aboutCovers?: boolean | MediaCountOutputTypeCountAboutCoversArgs
   teamPhotos?: boolean | MediaCountOutputTypeCountTeamPhotosArgs
   partnerLogos?: boolean | MediaCountOutputTypeCountPartnerLogosArgs
@@ -1272,8 +1388,8 @@ export type MediaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * MediaCountOutputType without action
  */
-export type MediaCountOutputTypeCountHeroImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.HeroWhereInput
+export type MediaCountOutputTypeCountHeroSlidesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeroSlideWhereInput
 }
 
 /**
@@ -1326,10 +1442,12 @@ export type MediaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   height?: boolean
   bytes?: boolean
   format?: boolean
+  kind?: boolean
+  duration?: boolean
   alt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  heroImages?: boolean | Prisma.Media$heroImagesArgs<ExtArgs>
+  heroSlides?: boolean | Prisma.Media$heroSlidesArgs<ExtArgs>
   aboutCovers?: boolean | Prisma.Media$aboutCoversArgs<ExtArgs>
   teamPhotos?: boolean | Prisma.Media$teamPhotosArgs<ExtArgs>
   partnerLogos?: boolean | Prisma.Media$partnerLogosArgs<ExtArgs>
@@ -1346,6 +1464,8 @@ export type MediaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   height?: boolean
   bytes?: boolean
   format?: boolean
+  kind?: boolean
+  duration?: boolean
   alt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1358,6 +1478,8 @@ export type MediaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   height?: boolean
   bytes?: boolean
   format?: boolean
+  kind?: boolean
+  duration?: boolean
   alt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1370,14 +1492,16 @@ export type MediaSelectScalar = {
   height?: boolean
   bytes?: boolean
   format?: boolean
+  kind?: boolean
+  duration?: boolean
   alt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MediaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publicId" | "width" | "height" | "bytes" | "format" | "alt" | "createdAt" | "updatedAt", ExtArgs["result"]["media"]>
+export type MediaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publicId" | "width" | "height" | "bytes" | "format" | "kind" | "duration" | "alt" | "createdAt" | "updatedAt", ExtArgs["result"]["media"]>
 export type MediaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  heroImages?: boolean | Prisma.Media$heroImagesArgs<ExtArgs>
+  heroSlides?: boolean | Prisma.Media$heroSlidesArgs<ExtArgs>
   aboutCovers?: boolean | Prisma.Media$aboutCoversArgs<ExtArgs>
   teamPhotos?: boolean | Prisma.Media$teamPhotosArgs<ExtArgs>
   partnerLogos?: boolean | Prisma.Media$partnerLogosArgs<ExtArgs>
@@ -1392,7 +1516,7 @@ export type MediaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $MediaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Media"
   objects: {
-    heroImages: Prisma.$HeroPayload<ExtArgs>[]
+    heroSlides: Prisma.$HeroSlidePayload<ExtArgs>[]
     aboutCovers: Prisma.$AboutPagePayload<ExtArgs>[]
     teamPhotos: Prisma.$TeamMemberPayload<ExtArgs>[]
     partnerLogos: Prisma.$PartnerPayload<ExtArgs>[]
@@ -1407,6 +1531,8 @@ export type $MediaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     height: number
     bytes: number
     format: string
+    kind: $Enums.MediaKind
+    duration: number | null
     alt: string
     createdAt: Date
     updatedAt: Date
@@ -1804,7 +1930,7 @@ readonly fields: MediaFieldRefs;
  */
 export interface Prisma__MediaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  heroImages<T extends Prisma.Media$heroImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$heroImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heroSlides<T extends Prisma.Media$heroSlidesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$heroSlidesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeroSlidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aboutCovers<T extends Prisma.Media$aboutCoversArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$aboutCoversArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AboutPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamPhotos<T extends Prisma.Media$teamPhotosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$teamPhotosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   partnerLogos<T extends Prisma.Media$partnerLogosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Media$partnerLogosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1846,6 +1972,8 @@ export interface MediaFieldRefs {
   readonly height: Prisma.FieldRef<"Media", 'Int'>
   readonly bytes: Prisma.FieldRef<"Media", 'Int'>
   readonly format: Prisma.FieldRef<"Media", 'String'>
+  readonly kind: Prisma.FieldRef<"Media", 'MediaKind'>
+  readonly duration: Prisma.FieldRef<"Media", 'Float'>
   readonly alt: Prisma.FieldRef<"Media", 'String'>
   readonly createdAt: Prisma.FieldRef<"Media", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Media", 'DateTime'>
@@ -2242,27 +2370,27 @@ export type MediaDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Media.heroImages
+ * Media.heroSlides
  */
-export type Media$heroImagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Media$heroSlidesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Hero
+   * Select specific fields to fetch from the HeroSlide
    */
-  select?: Prisma.HeroSelect<ExtArgs> | null
+  select?: Prisma.HeroSlideSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Hero
+   * Omit specific fields from the HeroSlide
    */
-  omit?: Prisma.HeroOmit<ExtArgs> | null
+  omit?: Prisma.HeroSlideOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.HeroInclude<ExtArgs> | null
-  where?: Prisma.HeroWhereInput
-  orderBy?: Prisma.HeroOrderByWithRelationInput | Prisma.HeroOrderByWithRelationInput[]
-  cursor?: Prisma.HeroWhereUniqueInput
+  include?: Prisma.HeroSlideInclude<ExtArgs> | null
+  where?: Prisma.HeroSlideWhereInput
+  orderBy?: Prisma.HeroSlideOrderByWithRelationInput | Prisma.HeroSlideOrderByWithRelationInput[]
+  cursor?: Prisma.HeroSlideWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.HeroScalarFieldEnum | Prisma.HeroScalarFieldEnum[]
+  distinct?: Prisma.HeroSlideScalarFieldEnum | Prisma.HeroSlideScalarFieldEnum[]
 }
 
 /**

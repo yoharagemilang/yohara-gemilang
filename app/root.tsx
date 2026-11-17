@@ -5,6 +5,11 @@ import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestora
 import type { Route } from './+types/root';
 import './app.css';
 
+export function loader() {
+  // Nama cloud bersifat publik, dipakai untuk membuat URL gambar di browser
+  return { cloudName: process.env.CLOUDINARY_CLOUD_NAME ?? '' };
+}
+
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {

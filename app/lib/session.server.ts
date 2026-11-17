@@ -24,9 +24,9 @@ function getStorage() {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      // Cookie hanya dikirim ke /admin, halaman publik tetap bebas cookie
-      // sehingga aman di-cache CDN.
-      path: '/admin',
+      // Harus "/" supaya ikut terkirim ke /admin.data (request data React Router).
+      // Path "/admin" tidak cocok dengan "/admin.data" dan menyebabkan loop redirect.
+      path: '/',
       maxAge: MAX_AGE,
       secrets: [secret],
     },

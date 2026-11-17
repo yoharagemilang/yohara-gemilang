@@ -17,6 +17,14 @@ export const PublishStatus = {
 export type PublishStatus = (typeof PublishStatus)[keyof typeof PublishStatus]
 
 
+export const MediaKind = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO'
+} as const
+
+export type MediaKind = (typeof MediaKind)[keyof typeof MediaKind]
+
+
 export const MessageStatus = {
   NEW: 'NEW',
   REPLIED: 'REPLIED',

@@ -8,8 +8,9 @@ export const adminNav = [
   {
     label: 'Konten',
     items: [
-      { to: '/admin/hero', label: 'Hero', icon: 'image', ready: false },
-      { to: '/admin/layanan', label: 'Layanan', icon: 'briefcase', ready: false },
+      { to: '/admin/media', label: 'Media', icon: 'images', ready: true },
+      { to: '/admin/hero', label: 'Hero', icon: 'image', ready: true },
+      { to: '/admin/layanan', label: 'Layanan', icon: 'briefcase', ready: true },
       { to: '/admin/partner', label: 'Partner', icon: 'handshake', ready: false },
       { to: '/admin/portofolio', label: 'Portofolio', icon: 'folder', ready: false },
       { to: '/admin/artikel', label: 'Artikel', icon: 'file', ready: false },

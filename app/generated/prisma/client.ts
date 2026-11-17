@@ -62,6 +62,11 @@ export type SiteSetting = Prisma.SiteSettingModel
  */
 export type Hero = Prisma.HeroModel
 /**
+ * Model HeroSlide
+ * 
+ */
+export type HeroSlide = Prisma.HeroSlideModel
+/**
  * Model AboutPage
  * 
  */

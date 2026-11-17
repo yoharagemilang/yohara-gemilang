@@ -34,9 +34,6 @@ export type HeroMinAggregateOutputType = {
   primaryHref: string | null
   secondaryLabel: string | null
   secondaryHref: string | null
-  imageId: string | null
-  captionTitle: string | null
-  captionMeta: string | null
   updatedAt: Date | null
 }
 
@@ -50,9 +47,6 @@ export type HeroMaxAggregateOutputType = {
   primaryHref: string | null
   secondaryLabel: string | null
   secondaryHref: string | null
-  imageId: string | null
-  captionTitle: string | null
-  captionMeta: string | null
   updatedAt: Date | null
 }
 
@@ -66,9 +60,6 @@ export type HeroCountAggregateOutputType = {
   primaryHref: number
   secondaryLabel: number
   secondaryHref: number
-  imageId: number
-  captionTitle: number
-  captionMeta: number
   updatedAt: number
   _all: number
 }
@@ -84,9 +75,6 @@ export type HeroMinAggregateInputType = {
   primaryHref?: true
   secondaryLabel?: true
   secondaryHref?: true
-  imageId?: true
-  captionTitle?: true
-  captionMeta?: true
   updatedAt?: true
 }
 
@@ -100,9 +88,6 @@ export type HeroMaxAggregateInputType = {
   primaryHref?: true
   secondaryLabel?: true
   secondaryHref?: true
-  imageId?: true
-  captionTitle?: true
-  captionMeta?: true
   updatedAt?: true
 }
 
@@ -116,9 +101,6 @@ export type HeroCountAggregateInputType = {
   primaryHref?: true
   secondaryLabel?: true
   secondaryHref?: true
-  imageId?: true
-  captionTitle?: true
-  captionMeta?: true
   updatedAt?: true
   _all?: true
 }
@@ -205,9 +187,6 @@ export type HeroGroupByOutputType = {
   primaryHref: string
   secondaryLabel: string | null
   secondaryHref: string | null
-  imageId: string | null
-  captionTitle: string | null
-  captionMeta: string | null
   updatedAt: Date
   _count: HeroCountAggregateOutputType | null
   _min: HeroMinAggregateOutputType | null
@@ -242,11 +221,8 @@ export type HeroWhereInput = {
   primaryHref?: Prisma.StringFilter<"Hero"> | string
   secondaryLabel?: Prisma.StringNullableFilter<"Hero"> | string | null
   secondaryHref?: Prisma.StringNullableFilter<"Hero"> | string | null
-  imageId?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionTitle?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionMeta?: Prisma.StringNullableFilter<"Hero"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"Hero"> | Date | string
-  image?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
+  slides?: Prisma.HeroSlideListRelationFilter
 }
 
 export type HeroOrderByWithRelationInput = {
@@ -259,11 +235,8 @@ export type HeroOrderByWithRelationInput = {
   primaryHref?: Prisma.SortOrder
   secondaryLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryHref?: Prisma.SortOrderInput | Prisma.SortOrder
-  imageId?: Prisma.SortOrderInput | Prisma.SortOrder
-  captionTitle?: Prisma.SortOrderInput | Prisma.SortOrder
-  captionMeta?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.MediaOrderByWithRelationInput
+  slides?: Prisma.HeroSlideOrderByRelationAggregateInput
 }
 
 export type HeroWhereUniqueInput = Prisma.AtLeast<{
@@ -279,11 +252,8 @@ export type HeroWhereUniqueInput = Prisma.AtLeast<{
   primaryHref?: Prisma.StringFilter<"Hero"> | string
   secondaryLabel?: Prisma.StringNullableFilter<"Hero"> | string | null
   secondaryHref?: Prisma.StringNullableFilter<"Hero"> | string | null
-  imageId?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionTitle?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionMeta?: Prisma.StringNullableFilter<"Hero"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"Hero"> | Date | string
-  image?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
+  slides?: Prisma.HeroSlideListRelationFilter
 }, "id">
 
 export type HeroOrderByWithAggregationInput = {
@@ -296,9 +266,6 @@ export type HeroOrderByWithAggregationInput = {
   primaryHref?: Prisma.SortOrder
   secondaryLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   secondaryHref?: Prisma.SortOrderInput | Prisma.SortOrder
-  imageId?: Prisma.SortOrderInput | Prisma.SortOrder
-  captionTitle?: Prisma.SortOrderInput | Prisma.SortOrder
-  captionMeta?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.HeroCountOrderByAggregateInput
   _max?: Prisma.HeroMaxOrderByAggregateInput
@@ -318,9 +285,6 @@ export type HeroScalarWhereWithAggregatesInput = {
   primaryHref?: Prisma.StringWithAggregatesFilter<"Hero"> | string
   secondaryLabel?: Prisma.StringNullableWithAggregatesFilter<"Hero"> | string | null
   secondaryHref?: Prisma.StringNullableWithAggregatesFilter<"Hero"> | string | null
-  imageId?: Prisma.StringNullableWithAggregatesFilter<"Hero"> | string | null
-  captionTitle?: Prisma.StringNullableWithAggregatesFilter<"Hero"> | string | null
-  captionMeta?: Prisma.StringNullableWithAggregatesFilter<"Hero"> | string | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Hero"> | Date | string
 }
 
@@ -334,10 +298,8 @@ export type HeroCreateInput = {
   primaryHref: string
   secondaryLabel?: string | null
   secondaryHref?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
   updatedAt?: Date | string
-  image?: Prisma.MediaCreateNestedOneWithoutHeroImagesInput
+  slides?: Prisma.HeroSlideCreateNestedManyWithoutHeroInput
 }
 
 export type HeroUncheckedCreateInput = {
@@ -350,10 +312,8 @@ export type HeroUncheckedCreateInput = {
   primaryHref: string
   secondaryLabel?: string | null
   secondaryHref?: string | null
-  imageId?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
   updatedAt?: Date | string
+  slides?: Prisma.HeroSlideUncheckedCreateNestedManyWithoutHeroInput
 }
 
 export type HeroUpdateInput = {
@@ -366,10 +326,8 @@ export type HeroUpdateInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.MediaUpdateOneWithoutHeroImagesNestedInput
+  slides?: Prisma.HeroSlideUpdateManyWithoutHeroNestedInput
 }
 
 export type HeroUncheckedUpdateInput = {
@@ -382,10 +340,8 @@ export type HeroUncheckedUpdateInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slides?: Prisma.HeroSlideUncheckedUpdateManyWithoutHeroNestedInput
 }
 
 export type HeroCreateManyInput = {
@@ -398,9 +354,6 @@ export type HeroCreateManyInput = {
   primaryHref: string
   secondaryLabel?: string | null
   secondaryHref?: string | null
-  imageId?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
   updatedAt?: Date | string
 }
 
@@ -414,8 +367,6 @@ export type HeroUpdateManyMutationInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -429,20 +380,7 @@ export type HeroUncheckedUpdateManyInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type HeroListRelationFilter = {
-  every?: Prisma.HeroWhereInput
-  some?: Prisma.HeroWhereInput
-  none?: Prisma.HeroWhereInput
-}
-
-export type HeroOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type HeroCountOrderByAggregateInput = {
@@ -455,9 +393,6 @@ export type HeroCountOrderByAggregateInput = {
   primaryHref?: Prisma.SortOrder
   secondaryLabel?: Prisma.SortOrder
   secondaryHref?: Prisma.SortOrder
-  imageId?: Prisma.SortOrder
-  captionTitle?: Prisma.SortOrder
-  captionMeta?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -471,9 +406,6 @@ export type HeroMaxOrderByAggregateInput = {
   primaryHref?: Prisma.SortOrder
   secondaryLabel?: Prisma.SortOrder
   secondaryHref?: Prisma.SortOrder
-  imageId?: Prisma.SortOrder
-  captionTitle?: Prisma.SortOrder
-  captionMeta?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -487,55 +419,29 @@ export type HeroMinOrderByAggregateInput = {
   primaryHref?: Prisma.SortOrder
   secondaryLabel?: Prisma.SortOrder
   secondaryHref?: Prisma.SortOrder
-  imageId?: Prisma.SortOrder
-  captionTitle?: Prisma.SortOrder
-  captionMeta?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type HeroCreateNestedManyWithoutImageInput = {
-  create?: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput> | Prisma.HeroCreateWithoutImageInput[] | Prisma.HeroUncheckedCreateWithoutImageInput[]
-  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutImageInput | Prisma.HeroCreateOrConnectWithoutImageInput[]
-  createMany?: Prisma.HeroCreateManyImageInputEnvelope
-  connect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
+export type HeroScalarRelationFilter = {
+  is?: Prisma.HeroWhereInput
+  isNot?: Prisma.HeroWhereInput
 }
 
-export type HeroUncheckedCreateNestedManyWithoutImageInput = {
-  create?: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput> | Prisma.HeroCreateWithoutImageInput[] | Prisma.HeroUncheckedCreateWithoutImageInput[]
-  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutImageInput | Prisma.HeroCreateOrConnectWithoutImageInput[]
-  createMany?: Prisma.HeroCreateManyImageInputEnvelope
-  connect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
+export type HeroCreateNestedOneWithoutSlidesInput = {
+  create?: Prisma.XOR<Prisma.HeroCreateWithoutSlidesInput, Prisma.HeroUncheckedCreateWithoutSlidesInput>
+  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutSlidesInput
+  connect?: Prisma.HeroWhereUniqueInput
 }
 
-export type HeroUpdateManyWithoutImageNestedInput = {
-  create?: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput> | Prisma.HeroCreateWithoutImageInput[] | Prisma.HeroUncheckedCreateWithoutImageInput[]
-  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutImageInput | Prisma.HeroCreateOrConnectWithoutImageInput[]
-  upsert?: Prisma.HeroUpsertWithWhereUniqueWithoutImageInput | Prisma.HeroUpsertWithWhereUniqueWithoutImageInput[]
-  createMany?: Prisma.HeroCreateManyImageInputEnvelope
-  set?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  disconnect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  delete?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  connect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  update?: Prisma.HeroUpdateWithWhereUniqueWithoutImageInput | Prisma.HeroUpdateWithWhereUniqueWithoutImageInput[]
-  updateMany?: Prisma.HeroUpdateManyWithWhereWithoutImageInput | Prisma.HeroUpdateManyWithWhereWithoutImageInput[]
-  deleteMany?: Prisma.HeroScalarWhereInput | Prisma.HeroScalarWhereInput[]
+export type HeroUpdateOneRequiredWithoutSlidesNestedInput = {
+  create?: Prisma.XOR<Prisma.HeroCreateWithoutSlidesInput, Prisma.HeroUncheckedCreateWithoutSlidesInput>
+  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutSlidesInput
+  upsert?: Prisma.HeroUpsertWithoutSlidesInput
+  connect?: Prisma.HeroWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.HeroUpdateToOneWithWhereWithoutSlidesInput, Prisma.HeroUpdateWithoutSlidesInput>, Prisma.HeroUncheckedUpdateWithoutSlidesInput>
 }
 
-export type HeroUncheckedUpdateManyWithoutImageNestedInput = {
-  create?: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput> | Prisma.HeroCreateWithoutImageInput[] | Prisma.HeroUncheckedCreateWithoutImageInput[]
-  connectOrCreate?: Prisma.HeroCreateOrConnectWithoutImageInput | Prisma.HeroCreateOrConnectWithoutImageInput[]
-  upsert?: Prisma.HeroUpsertWithWhereUniqueWithoutImageInput | Prisma.HeroUpsertWithWhereUniqueWithoutImageInput[]
-  createMany?: Prisma.HeroCreateManyImageInputEnvelope
-  set?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  disconnect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  delete?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  connect?: Prisma.HeroWhereUniqueInput | Prisma.HeroWhereUniqueInput[]
-  update?: Prisma.HeroUpdateWithWhereUniqueWithoutImageInput | Prisma.HeroUpdateWithWhereUniqueWithoutImageInput[]
-  updateMany?: Prisma.HeroUpdateManyWithWhereWithoutImageInput | Prisma.HeroUpdateManyWithWhereWithoutImageInput[]
-  deleteMany?: Prisma.HeroScalarWhereInput | Prisma.HeroScalarWhereInput[]
-}
-
-export type HeroCreateWithoutImageInput = {
+export type HeroCreateWithoutSlidesInput = {
   id?: string
   eyebrow: string
   heading: string
@@ -545,12 +451,10 @@ export type HeroCreateWithoutImageInput = {
   primaryHref: string
   secondaryLabel?: string | null
   secondaryHref?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
   updatedAt?: Date | string
 }
 
-export type HeroUncheckedCreateWithoutImageInput = {
+export type HeroUncheckedCreateWithoutSlidesInput = {
   id?: string
   eyebrow: string
   heading: string
@@ -560,72 +464,26 @@ export type HeroUncheckedCreateWithoutImageInput = {
   primaryHref: string
   secondaryLabel?: string | null
   secondaryHref?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
   updatedAt?: Date | string
 }
 
-export type HeroCreateOrConnectWithoutImageInput = {
+export type HeroCreateOrConnectWithoutSlidesInput = {
   where: Prisma.HeroWhereUniqueInput
-  create: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput>
+  create: Prisma.XOR<Prisma.HeroCreateWithoutSlidesInput, Prisma.HeroUncheckedCreateWithoutSlidesInput>
 }
 
-export type HeroCreateManyImageInputEnvelope = {
-  data: Prisma.HeroCreateManyImageInput | Prisma.HeroCreateManyImageInput[]
-  skipDuplicates?: boolean
+export type HeroUpsertWithoutSlidesInput = {
+  update: Prisma.XOR<Prisma.HeroUpdateWithoutSlidesInput, Prisma.HeroUncheckedUpdateWithoutSlidesInput>
+  create: Prisma.XOR<Prisma.HeroCreateWithoutSlidesInput, Prisma.HeroUncheckedCreateWithoutSlidesInput>
+  where?: Prisma.HeroWhereInput
 }
 
-export type HeroUpsertWithWhereUniqueWithoutImageInput = {
-  where: Prisma.HeroWhereUniqueInput
-  update: Prisma.XOR<Prisma.HeroUpdateWithoutImageInput, Prisma.HeroUncheckedUpdateWithoutImageInput>
-  create: Prisma.XOR<Prisma.HeroCreateWithoutImageInput, Prisma.HeroUncheckedCreateWithoutImageInput>
+export type HeroUpdateToOneWithWhereWithoutSlidesInput = {
+  where?: Prisma.HeroWhereInput
+  data: Prisma.XOR<Prisma.HeroUpdateWithoutSlidesInput, Prisma.HeroUncheckedUpdateWithoutSlidesInput>
 }
 
-export type HeroUpdateWithWhereUniqueWithoutImageInput = {
-  where: Prisma.HeroWhereUniqueInput
-  data: Prisma.XOR<Prisma.HeroUpdateWithoutImageInput, Prisma.HeroUncheckedUpdateWithoutImageInput>
-}
-
-export type HeroUpdateManyWithWhereWithoutImageInput = {
-  where: Prisma.HeroScalarWhereInput
-  data: Prisma.XOR<Prisma.HeroUpdateManyMutationInput, Prisma.HeroUncheckedUpdateManyWithoutImageInput>
-}
-
-export type HeroScalarWhereInput = {
-  AND?: Prisma.HeroScalarWhereInput | Prisma.HeroScalarWhereInput[]
-  OR?: Prisma.HeroScalarWhereInput[]
-  NOT?: Prisma.HeroScalarWhereInput | Prisma.HeroScalarWhereInput[]
-  id?: Prisma.StringFilter<"Hero"> | string
-  eyebrow?: Prisma.StringFilter<"Hero"> | string
-  heading?: Prisma.StringFilter<"Hero"> | string
-  headingAccent?: Prisma.StringFilter<"Hero"> | string
-  description?: Prisma.StringFilter<"Hero"> | string
-  primaryLabel?: Prisma.StringFilter<"Hero"> | string
-  primaryHref?: Prisma.StringFilter<"Hero"> | string
-  secondaryLabel?: Prisma.StringNullableFilter<"Hero"> | string | null
-  secondaryHref?: Prisma.StringNullableFilter<"Hero"> | string | null
-  imageId?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionTitle?: Prisma.StringNullableFilter<"Hero"> | string | null
-  captionMeta?: Prisma.StringNullableFilter<"Hero"> | string | null
-  updatedAt?: Prisma.DateTimeFilter<"Hero"> | Date | string
-}
-
-export type HeroCreateManyImageInput = {
-  id?: string
-  eyebrow: string
-  heading: string
-  headingAccent: string
-  description: string
-  primaryLabel: string
-  primaryHref: string
-  secondaryLabel?: string | null
-  secondaryHref?: string | null
-  captionTitle?: string | null
-  captionMeta?: string | null
-  updatedAt?: Date | string
-}
-
-export type HeroUpdateWithoutImageInput = {
+export type HeroUpdateWithoutSlidesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   heading?: Prisma.StringFieldUpdateOperationsInput | string
@@ -635,12 +493,10 @@ export type HeroUpdateWithoutImageInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type HeroUncheckedUpdateWithoutImageInput = {
+export type HeroUncheckedUpdateWithoutSlidesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   eyebrow?: Prisma.StringFieldUpdateOperationsInput | string
   heading?: Prisma.StringFieldUpdateOperationsInput | string
@@ -650,26 +506,38 @@ export type HeroUncheckedUpdateWithoutImageInput = {
   primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
   secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type HeroUncheckedUpdateManyWithoutImageInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  eyebrow?: Prisma.StringFieldUpdateOperationsInput | string
-  heading?: Prisma.StringFieldUpdateOperationsInput | string
-  headingAccent?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  primaryLabel?: Prisma.StringFieldUpdateOperationsInput | string
-  primaryHref?: Prisma.StringFieldUpdateOperationsInput | string
-  secondaryLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  secondaryHref?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  captionMeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+
+/**
+ * Count Type HeroCountOutputType
+ */
+
+export type HeroCountOutputType = {
+  slides: number
 }
 
+export type HeroCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  slides?: boolean | HeroCountOutputTypeCountSlidesArgs
+}
+
+/**
+ * HeroCountOutputType without action
+ */
+export type HeroCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeroCountOutputType
+   */
+  select?: Prisma.HeroCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * HeroCountOutputType without action
+ */
+export type HeroCountOutputTypeCountSlidesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeroSlideWhereInput
+}
 
 
 export type HeroSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -682,11 +550,9 @@ export type HeroSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   primaryHref?: boolean
   secondaryLabel?: boolean
   secondaryHref?: boolean
-  imageId?: boolean
-  captionTitle?: boolean
-  captionMeta?: boolean
   updatedAt?: boolean
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
+  slides?: boolean | Prisma.Hero$slidesArgs<ExtArgs>
+  _count?: boolean | Prisma.HeroCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hero"]>
 
 export type HeroSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -699,11 +565,7 @@ export type HeroSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   primaryHref?: boolean
   secondaryLabel?: boolean
   secondaryHref?: boolean
-  imageId?: boolean
-  captionTitle?: boolean
-  captionMeta?: boolean
   updatedAt?: boolean
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
 }, ExtArgs["result"]["hero"]>
 
 export type HeroSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -716,11 +578,7 @@ export type HeroSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   primaryHref?: boolean
   secondaryLabel?: boolean
   secondaryHref?: boolean
-  imageId?: boolean
-  captionTitle?: boolean
-  captionMeta?: boolean
   updatedAt?: boolean
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
 }, ExtArgs["result"]["hero"]>
 
 export type HeroSelectScalar = {
@@ -733,27 +591,21 @@ export type HeroSelectScalar = {
   primaryHref?: boolean
   secondaryLabel?: boolean
   secondaryHref?: boolean
-  imageId?: boolean
-  captionTitle?: boolean
-  captionMeta?: boolean
   updatedAt?: boolean
 }
 
-export type HeroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eyebrow" | "heading" | "headingAccent" | "description" | "primaryLabel" | "primaryHref" | "secondaryLabel" | "secondaryHref" | "imageId" | "captionTitle" | "captionMeta" | "updatedAt", ExtArgs["result"]["hero"]>
+export type HeroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eyebrow" | "heading" | "headingAccent" | "description" | "primaryLabel" | "primaryHref" | "secondaryLabel" | "secondaryHref" | "updatedAt", ExtArgs["result"]["hero"]>
 export type HeroInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
+  slides?: boolean | Prisma.Hero$slidesArgs<ExtArgs>
+  _count?: boolean | Prisma.HeroCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type HeroIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
-}
-export type HeroIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  image?: boolean | Prisma.Hero$imageArgs<ExtArgs>
-}
+export type HeroIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type HeroIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $HeroPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Hero"
   objects: {
-    image: Prisma.$MediaPayload<ExtArgs> | null
+    slides: Prisma.$HeroSlidePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -765,9 +617,6 @@ export type $HeroPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     primaryHref: string
     secondaryLabel: string | null
     secondaryHref: string | null
-    imageId: string | null
-    captionTitle: string | null
-    captionMeta: string | null
     updatedAt: Date
   }, ExtArgs["result"]["hero"]>
   composites: {}
@@ -1163,7 +1012,7 @@ readonly fields: HeroFieldRefs;
  */
 export interface Prisma__HeroClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  image<T extends Prisma.Hero$imageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hero$imageArgs<ExtArgs>>): Prisma.Prisma__MediaClient<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  slides<T extends Prisma.Hero$slidesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hero$slidesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeroSlidePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1202,9 +1051,6 @@ export interface HeroFieldRefs {
   readonly primaryHref: Prisma.FieldRef<"Hero", 'String'>
   readonly secondaryLabel: Prisma.FieldRef<"Hero", 'String'>
   readonly secondaryHref: Prisma.FieldRef<"Hero", 'String'>
-  readonly imageId: Prisma.FieldRef<"Hero", 'String'>
-  readonly captionTitle: Prisma.FieldRef<"Hero", 'String'>
-  readonly captionMeta: Prisma.FieldRef<"Hero", 'String'>
   readonly updatedAt: Prisma.FieldRef<"Hero", 'DateTime'>
 }
     
@@ -1460,10 +1306,6 @@ export type HeroCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.HeroCreateManyInput | Prisma.HeroCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.HeroIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1534,10 +1376,6 @@ export type HeroUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Heroes to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.HeroIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1607,22 +1445,27 @@ export type HeroDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Hero.image
+ * Hero.slides
  */
-export type Hero$imageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Hero$slidesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Media
+   * Select specific fields to fetch from the HeroSlide
    */
-  select?: Prisma.MediaSelect<ExtArgs> | null
+  select?: Prisma.HeroSlideSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Media
+   * Omit specific fields from the HeroSlide
    */
-  omit?: Prisma.MediaOmit<ExtArgs> | null
+  omit?: Prisma.HeroSlideOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MediaInclude<ExtArgs> | null
-  where?: Prisma.MediaWhereInput
+  include?: Prisma.HeroSlideInclude<ExtArgs> | null
+  where?: Prisma.HeroSlideWhereInput
+  orderBy?: Prisma.HeroSlideOrderByWithRelationInput | Prisma.HeroSlideOrderByWithRelationInput[]
+  cursor?: Prisma.HeroSlideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeroSlideScalarFieldEnum | Prisma.HeroSlideScalarFieldEnum[]
 }
 
 /**

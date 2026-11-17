@@ -1,5 +1,5 @@
 // app/components/admin/app-sidebar.tsx
-import { Briefcase, ChevronsUpDown, ExternalLink, FileText, Folder, Handshake, CircleHelp, Image as ImageIcon, Info, LayoutDashboard, LogOut, Mail, Settings, Users, type LucideIcon } from 'lucide-react';
+import { Briefcase, ChevronsUpDown, ExternalLink, FileText, Folder, Handshake, CircleHelp, Image as ImageIcon, Images, Info, LayoutDashboard, LogOut, Mail, Settings, Users, type LucideIcon } from 'lucide-react';
 import { Link, useLocation, useSubmit } from 'react-router';
 
 import { Avatar, AvatarFallback } from '~/components/ui/avatar';
@@ -24,6 +24,7 @@ import { adminNav, type NavIcon } from './nav';
 const icons: Record<NavIcon, LucideIcon> = {
   layout: LayoutDashboard,
   image: ImageIcon,
+  images: Images,
   briefcase: Briefcase,
   handshake: Handshake,
   folder: Folder,
