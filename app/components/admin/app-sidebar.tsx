@@ -51,11 +51,14 @@ export function AppSidebar({ admin, newMessages }: { admin: { name: string; emai
   const submit = useSubmit();
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="px-2 py-1.5">
+        <div className="px-2 py-1.5 group-data-[collapsible=icon]:hidden">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Yohara Gemilang</p>
           <p className="text-xs text-muted-foreground">Panel Admin</p>
+        </div>
+        <div aria-hidden className="hidden size-8 place-items-center rounded-md bg-primary text-xs font-bold text-primary-foreground group-data-[collapsible=icon]:grid">
+          YG
         </div>
       </SidebarHeader>
 
@@ -67,17 +70,18 @@ export function AppSidebar({ admin, newMessages }: { admin: { name: string; emai
               <SidebarMenu>
                 {group.items.map((item) => {
                   const Icon = icons[item.icon];
+                  const tip = item.to === '/admin/pesan' && newMessages > 0 ? `${item.label} (${newMessages} baru)` : item.label;
                   const active = item.to === '/admin' ? pathname === '/admin' : pathname.startsWith(item.to);
 
                   return (
                     <SidebarMenuItem key={item.to}>
                       {item.ready ? (
-                        <SidebarMenuButton isActive={active} render={<Link to={item.to} onClick={() => isMobile && setOpenMobile(false)} />}>
+                        <SidebarMenuButton isActive={active} tooltip={tip} render={<Link to={item.to} onClick={() => isMobile && setOpenMobile(false)} />}>
                           <Icon />
                           <span>{item.label}</span>
                         </SidebarMenuButton>
                       ) : (
-                        <SidebarMenuButton disabled>
+                        <SidebarMenuButton disabled tooltip={`${item.label} (segera hadir)`}>
                           <Icon />
                           <span>{item.label}</span>
                         </SidebarMenuButton>
@@ -96,7 +100,7 @@ export function AppSidebar({ admin, newMessages }: { admin: { name: string; emai
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger render={<SidebarMenuButton size="lg" className="data-popup-open:bg-sidebar-accent" />}>
+              <DropdownMenuTrigger render={<SidebarMenuButton size="lg" tooltip={admin.name} className="data-popup-open:bg-sidebar-accent" />}>
                 <Avatar className="size-8">
                   <AvatarFallback>{initials(admin.name)}</AvatarFallback>
                 </Avatar>
