@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import { CldImage } from '~/components/cld-image';
 import { formatNumberId } from '~/lib/format';
 import { cn } from '~/lib/utils';
-import type { PublicMedia } from '~/services/public/home.server';
+import type { PublicMedia } from '~/services/public/media';
 
 export type PortfolioCardItem = {
   slug: string;

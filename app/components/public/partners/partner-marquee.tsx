@@ -1,7 +1,7 @@
 // app/components/public/partners/partner-marquee.tsx
 // Daftar klien berjalan pelan, berhenti saat kursor di atasnya. Reduced-motion: tampil diam dan rapi.
 import { CldImage } from '~/components/cld-image';
-import type { PublicMedia } from '~/services/public/home.server';
+import type { PublicMedia } from '~/services/public/media';
 
 export type PartnerItem = { id: string; name: string; logo: PublicMedia | null };
 

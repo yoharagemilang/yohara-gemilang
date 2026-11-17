@@ -3,16 +3,9 @@
 import { db } from '~/lib/db.server';
 import { mediaSelect } from '../helpers.server';
 import { getHero } from '../hero.server';
+import { pickMedia, type PublicMedia } from './media';
 
 const byOrder = [{ sortOrder: 'asc' }, { createdAt: 'asc' }] as const;
-
-export type PublicMedia = {
-  publicId: string;
-  width: number;
-  height: number;
-  alt: string;
-  kind: 'IMAGE' | 'VIDEO';
-};
 
 export type HeroSlideView = PublicMedia & {
   id: string;
@@ -31,10 +24,6 @@ const fallbackHero = {
   secondaryLabel: 'Lihat portofolio' as string | null,
   secondaryHref: '/portofolio' as string | null,
 };
-
-function pickMedia(m: PublicMedia | null | undefined): PublicMedia | null {
-  return m ? { publicId: m.publicId, width: m.width, height: m.height, alt: m.alt, kind: m.kind } : null;
-}
 
 export async function getHomeData() {
   const [hero, services, partners, projects, articles, faqs] = await Promise.all([
