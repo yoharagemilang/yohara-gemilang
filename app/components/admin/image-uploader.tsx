@@ -10,6 +10,7 @@ import { Input } from '~/components/ui/input';
 import { Progress } from '~/components/ui/progress';
 import { LANDSCAPE_HINT, type Orientation } from '~/lib/image-rules';
 import { ACCEPT, mediaApi } from '~/lib/image.client';
+import { cn } from '~/lib/utils';
 import type { MediaItem } from '~/schemas/media';
 import { MediaPicker } from './media-picker';
 import { useImageUpload } from './use-image-upload';
@@ -27,6 +28,7 @@ export function ImageUploader({
   aspect = 16 / 9,
   fit = 'cover',
   orientation = 'landscape',
+  previewClassName = 'max-w-md',
   error,
 }: {
   name: string;
@@ -40,6 +42,8 @@ export function ImageUploader({
   fit?: 'cover' | 'contain';
   /** landscape (bawaan) menolak gambar potret. Pakai "any" untuk logo dan foto orang. */
   orientation?: Orientation;
+  /** Lebar maksimum kotak pratinjau */
+  previewClassName?: string;
   error?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -71,7 +75,7 @@ export function ImageUploader({
 
       <input type="hidden" name={name} value={value?.id ?? ''} />
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-lg border bg-muted" style={{ aspectRatio: String(aspect) }}>
+      <div className={cn('relative w-full overflow-hidden rounded-lg border bg-muted', previewClassName)} style={{ aspectRatio: String(aspect) }}>
         {value ? (
           <CldImage media={value} sizes="448px" widths={[320, 640, 960]} className={`size-full ${fit === 'contain' ? 'object-contain p-4' : 'object-cover'}`} />
         ) : (
@@ -104,7 +108,23 @@ export function ImageUploader({
         ) : null}
       </div>
 
-      {value ? <Input key={value.id} defaultValue={value.alt} placeholder="Teks alternatif (deskripsi singkat gambar)" maxLength={200} onBlur={(e) => saveAlt(e.target.value.trim())} className="max-w-md" /> : null}
+      {value ? (
+        <Input
+          key={value.id}
+          defaultValue={value.alt}
+          placeholder="Teks alternatif (deskripsi singkat gambar)"
+          maxLength={200}
+          onBlur={(e) => saveAlt(e.target.value.trim())}
+          onKeyDown={(e) => {
+            // Enter di sini tidak boleh mengirim form induk
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              e.currentTarget.blur();
+            }
+          }}
+          className="max-w-md"
+        />
+      ) : null}
 
       {error ? <FieldError>{error}</FieldError> : null}
 
