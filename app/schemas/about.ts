@@ -5,7 +5,8 @@ import { optionalId, plainText, requiredText } from './common';
 export const aboutSchema = z.object({
   title: requiredText('Judul', 100),
   subtitle: requiredText('Subjudul', 200),
-  content: requiredText('Cerita perusahaan', 6000),
+  // HTML dari editor. Dibersihkan dan dicek tidak kosong di service.
+  contentHtml: z.string().max(60000, 'Cerita terlalu panjang'),
   vision: plainText(400),
   mission: plainText(800),
   foundedYear: z

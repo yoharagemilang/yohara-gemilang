@@ -4,13 +4,13 @@ import { Form, data, useNavigation } from 'react-router';
 import { toast } from 'sonner';
 
 import { ImageUploader } from '~/components/admin/image-uploader';
+import { RichTextEditor } from '~/components/admin/rich-text-editor';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
 import { Spinner } from '~/components/ui/spinner';
 import { Textarea } from '~/components/ui/textarea';
-import { htmlToPlain } from '~/lib/text-html';
 import { aboutSchema } from '~/schemas/about';
 import { fieldErrors, firstErrors } from '~/schemas/common';
 import type { MediaItem } from '~/schemas/media';
@@ -28,7 +28,7 @@ export async function loader() {
     about: {
       title: about?.title ?? '',
       subtitle: about?.subtitle ?? '',
-      content: htmlToPlain(about?.contentHtml ?? ''),
+      contentHtml: about?.contentHtml ?? '',
       vision: about?.vision ?? '',
       mission: about?.mission ?? '',
       foundedYear: about?.foundedYear ? String(about.foundedYear) : '',
@@ -46,7 +46,7 @@ export async function action({ request }: Route.ActionArgs) {
   const result = await saveAbout(parsed.data);
   if (!result.ok) {
     const f = failure(result);
-    return data({ ok: false as const, errors: f.ok ? {} : (f.errors ?? { content: f.message ?? 'Gagal menyimpan' }) }, { status: 400 });
+    return data({ ok: false as const, errors: f.ok ? {} : (f.errors ?? { contentHtml: f.message ?? 'Gagal menyimpan' }) }, { status: 400 });
   }
   return { ok: true as const, errors: {} as Record<string, string> };
 }
@@ -63,7 +63,7 @@ export default function AdminTentang({ loaderData, actionData }: Route.Component
     else if (actionData && !actionData.ok) toast.error('Periksa kembali isian yang bertanda merah');
   }, [actionData]);
 
-  const field = (name: Exclude<keyof typeof about, 'cover'>) => ({
+  const field = (name: Exclude<keyof typeof about, 'cover' | 'contentHtml'>) => ({
     id: name,
     name,
     defaultValue: about[name],
@@ -95,12 +95,7 @@ export default function AdminTentang({ loaderData, actionData }: Route.Component
                 <Input {...field('subtitle')} maxLength={200} />
                 {errors.subtitle ? <FieldError>{errors.subtitle}</FieldError> : null}
               </Field>
-              <Field data-invalid={errors.content ? true : undefined}>
-                <FieldLabel htmlFor="content">Cerita perusahaan</FieldLabel>
-                <Textarea {...field('content')} rows={10} maxLength={6000} />
-                <FieldDescription>Pisahkan paragraf dengan satu baris kosong. Editor dengan format teks menyusul di tahap berikutnya.</FieldDescription>
-                {errors.content ? <FieldError>{errors.content}</FieldError> : null}
-              </Field>
+              <RichTextEditor name="contentHtml" label="Cerita perusahaan" value={about.contentHtml} error={errors.contentHtml} />
               <Field data-invalid={errors.foundedYear ? true : undefined} className="max-w-48">
                 <FieldLabel htmlFor="foundedYear">Tahun berdiri</FieldLabel>
                 <Input {...field('foundedYear')} type="number" inputMode="numeric" min={1950} placeholder="2015" />

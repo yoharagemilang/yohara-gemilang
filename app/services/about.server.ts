@@ -1,7 +1,7 @@
 // app/services/about.server.ts
 import { db } from '~/lib/db.server';
 import { isLandscape } from '~/lib/image-rules';
-import { plainToHtml } from '~/lib/text-html';
+import { sanitizeRichText } from '~/lib/sanitize.server';
 import type { AboutInput } from '~/schemas/about';
 import { getMediaDims, mediaSelect, type ServiceResult } from './helpers.server';
 import { deleteMediaIfUnused } from './media.server';
@@ -14,7 +14,11 @@ export function getAbout() {
 }
 
 export async function saveAbout(input: AboutInput): Promise<ServiceResult> {
-  const { content, ...fields } = input;
+  const { contentHtml: rawHtml, ...fields } = input;
+  const contentHtml = sanitizeRichText(rawHtml);
+  if (!contentHtml) {
+    return { ok: false, field: 'contentHtml', message: 'Cerita perusahaan wajib diisi' };
+  }
 
   if (fields.coverId) {
     const media = await getMediaDims(fields.coverId);
@@ -25,7 +29,7 @@ export async function saveAbout(input: AboutInput): Promise<ServiceResult> {
   }
 
   const current = await db.aboutPage.findUnique({ where: { id: 'main' }, select: { coverId: true } });
-  const data = { ...fields, contentHtml: plainToHtml(content) };
+  const data = { ...fields, contentHtml };
   await db.aboutPage.upsert({
     where: { id: 'main' },
     create: { id: 'main', ...data },
