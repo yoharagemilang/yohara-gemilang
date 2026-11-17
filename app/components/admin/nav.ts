@@ -13,7 +13,7 @@ export const adminNav = [
       { to: '/admin/layanan', label: 'Layanan', icon: 'briefcase', ready: true },
       { to: '/admin/partner', label: 'Partner', icon: 'handshake', ready: true },
       { to: '/admin/portofolio', label: 'Portofolio', icon: 'folder', ready: true },
-      { to: '/admin/artikel', label: 'Artikel', icon: 'file', ready: false },
+      { to: '/admin/artikel', label: 'Artikel', icon: 'file', ready: true },
       { to: '/admin/faq', label: 'FAQ', icon: 'help', ready: true },
       { to: '/admin/tentang', label: 'Tentang', icon: 'info', ready: true },
       { to: '/admin/tim', label: 'Tim', icon: 'users', ready: true },

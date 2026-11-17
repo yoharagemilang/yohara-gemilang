@@ -21,6 +21,8 @@ export default [
     route('admin/tim', 'routes/admin/tim.tsx'),
     route('admin/portofolio', 'routes/admin/portofolio.tsx'),
     route('admin/portofolio/:slug', 'routes/admin/portofolio-form.tsx'),
+    route('admin/artikel', 'routes/admin/artikel.tsx'),
+    route('admin/artikel/:slug', 'routes/admin/artikel-form.tsx'),
     route('admin/pesan', 'routes/admin/pesan.tsx'),
     route('admin/pengaturan', 'routes/admin/pengaturan.tsx'),
     route('admin/media', 'routes/admin/media.tsx'),

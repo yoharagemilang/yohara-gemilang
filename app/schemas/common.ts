@@ -73,3 +73,25 @@ export const optionalUrl = (hosts?: string[]) =>
 
 /** Bentuk hasil action untuk halaman yang memakai dialog + fetcher. */
 export type ActionResult = { ok: true; message: string } | { ok: false; message?: string; errors?: Record<string, string> };
+
+/**
+ * Slug untuk alamat konten (portofolio, artikel). Dibuat dari judul, dipakai sama
+ * di admin dan situs publik. "baru" dicadangkan untuk alamat form tambah.
+ */
+export const slugField = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .min(1, 'Slug wajib diisi')
+  .max(100, 'Maksimal 100 karakter')
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Hanya huruf kecil, angka, dan tanda hubung. Contoh: gala-dinner-2026')
+  .refine((v) => v !== 'baru', 'Slug ini dipakai sistem, pilih yang lain');
+
+/** Tanggal dari <input type="date"> (YYYY-MM-DD). Kosong atau tidak dikirim menjadi null. */
+export const optionalDate = z
+  .string()
+  .trim()
+  .default('')
+  .transform((v) => (v === '' ? null : v))
+  .refine((v) => v === null || (/^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v))), 'Tanggal tidak valid')
+  .transform((v) => (v ? new Date(`${v}T00:00:00.000Z`) : null));

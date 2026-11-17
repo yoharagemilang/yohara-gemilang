@@ -1,20 +1,12 @@
 // app/schemas/portfolio.ts
 import { z } from 'zod';
-import { optionalId, requiredText } from './common';
+import { optionalDate, optionalId, requiredText, slugField } from './common';
 
 const maxYear = new Date().getFullYear() + 1;
 
 export const portfolioSchema = z.object({
   title: requiredText('Judul', 120),
-  slug: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, 'Slug wajib diisi')
-    .max(100, 'Maksimal 100 karakter')
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Hanya huruf kecil, angka, dan tanda hubung. Contoh: gala-dinner-2026')
-    // "baru" dipakai alamat form tambah (/admin/portofolio/baru)
-    .refine((v) => v !== 'baru', 'Slug ini dipakai sistem, pilih yang lain'),
+  slug: slugField,
   summary: requiredText('Ringkasan', 300),
   // HTML dari editor. Dibersihkan di service. Boleh kosong.
   contentHtml: z.string().max(60000, 'Isi terlalu panjang'),
@@ -42,13 +34,7 @@ export const portfolioSchema = z.object({
   status: z.enum(['DRAFT', 'PUBLISHED'], 'Pilih status'),
   isFeatured: z.preprocess((v) => v === 'on' || v === 'true', z.boolean()),
   // Kolom tanggal hanya ada di form saat status Terbit, jadi boleh tidak dikirim
-  publishedAt: z
-    .string()
-    .trim()
-    .default('')
-    .transform((v) => (v === '' ? null : v))
-    .refine((v) => v === null || (/^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v))), 'Tanggal tidak valid')
-    .transform((v) => (v ? new Date(`${v}T00:00:00.000Z`) : null)),
+  publishedAt: optionalDate,
 });
 
 export type PortfolioInput = z.infer<typeof portfolioSchema>;
