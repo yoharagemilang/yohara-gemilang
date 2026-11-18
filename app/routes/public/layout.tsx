@@ -1,7 +1,9 @@
 // app/routes/public/layout.tsx
 // Bingkai semua halaman publik: navbar, isi halaman, footer, tombol WhatsApp.
+import type { CSSProperties } from 'react';
 import { Outlet } from 'react-router';
 
+import { Toaster } from '~/components/ui/sonner';
 import { SiteFooter } from '~/components/public/layout/site-footer';
 import { SiteHeader } from '~/components/public/layout/site-header';
 import { WhatsAppButton } from '~/components/public/layout/whatsapp-button';
@@ -28,6 +30,7 @@ export default function PublicLayout({ loaderData }: Route.ComponentProps) {
       </main>
       <SiteFooter site={site} />
       <WhatsAppButton whatsapp={site.whatsapp} />
+      <Toaster richColors closeButton position="top-center" style={{ '--error-text': '#b91c1c' } as CSSProperties} />
     </>
   );
 }

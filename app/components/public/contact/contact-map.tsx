@@ -12,7 +12,7 @@ export function ContactMap({ query, title, address }: { query: string; title: st
   const directions = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-white">
-      <div className="aspect-4/3 bg-soft md:aspect-16/10">
+      <div className="aspect-4/3 bg-soft md:aspect-21/9">
         <iframe src={src} title={`Peta lokasi ${title}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="size-full border-0" />
       </div>
       <div className="flex flex-col gap-4 border-t border-line p-5 sm:flex-row sm:items-center sm:justify-between md:px-7">
