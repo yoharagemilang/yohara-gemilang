@@ -1,14 +1,15 @@
 // app/routes/public/tentang.tsx
 // Halaman Tentang: hanya mengambil data dan menyusun komponen di components/public/about.
-import { AboutCover } from '~/components/public/about/about-cover';
-import { AboutStory } from '~/components/public/about/about-story';
-import { TeamSection } from '~/components/public/about/team-section';
-import { VisionMission } from '~/components/public/about/vision-mission';
-import { CtaBanner } from '~/components/public/shared/cta-banner';
-import { PageHeader } from '~/components/public/shared/section';
-import { publicHeaders } from '~/lib/public-headers';
-import { getAboutData } from '~/services/public/about.server';
-import type { Route } from './+types/tentang';
+import { AboutCover } from "~/components/public/about/about-cover";
+import { AboutStory } from "~/components/public/about/about-story";
+import { TeamSection } from "~/components/public/about/team-section";
+import { VisionMission } from "~/components/public/about/vision-mission";
+import { CtaBanner } from "~/components/public/shared/cta-banner";
+import { PageHeader } from "~/components/public/shared/section";
+import { publicHeaders } from "~/lib/public-headers";
+import { getAboutData } from "~/services/public/about.server";
+import type { Route } from "./+types/tentang";
+import { breadcrumbLd, seoMeta } from "~/lib/seo";
 
 export function loader() {
   return getAboutData();
@@ -16,9 +17,17 @@ export function loader() {
 
 export const headers = publicHeaders;
 
-export function meta({ loaderData }: Route.MetaArgs) {
-  const title = loaderData?.about.title ?? 'Tentang kami';
-  return [{ title: `${title} | Yohara Gemilang Management` }];
+export function meta({ loaderData, matches }: Route.MetaArgs) {
+  const title = loaderData?.about.title ?? "Tentang kami";
+  return seoMeta(matches, {
+    title,
+    description:
+      loaderData?.about.subtitle ||
+      loaderData?.about.vision ||
+      "Kenali tim, visi, dan cara kerja Yohara Gemilang Management sebagai event organizer.",
+    path: "/tentang",
+    jsonLd: [breadcrumbLd(matches, [{ name: "Beranda", path: "/" }, { name: title, path: "/tentang" }])],
+  });
 }
 
 export default function Tentang({ loaderData }: Route.ComponentProps) {

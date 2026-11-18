@@ -1,25 +1,33 @@
 // app/root.tsx
-import { MotionConfig } from 'motion/react';
-import { isRouteErrorResponse, Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { LazyMotion, MotionConfig } from "motion/react";
+import {
+  isRouteErrorResponse,
+  Link,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "react-router";
 
-import type { Route } from './+types/root';
-import './app.css';
+import latinFont from "@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url";
+
+import type { Route } from "./+types/root";
+import "./app.css";
 
 export function loader() {
   // Nama cloud bersifat publik, dipakai untuk membuat URL gambar di browser
-  return { cloudName: process.env.CLOUDINARY_CLOUD_NAME ?? '' };
+  return { cloudName: process.env.CLOUDINARY_CLOUD_NAME ?? "" };
 }
 
 export const links: Route.LinksFunction = () => [
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  // Font di-host sendiri; subset latin dimuat lebih awal supaya teks tidak berkedip
   {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap',
+    rel: "preload",
+    href: latinFont,
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
   },
 ];
 
@@ -29,6 +37,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
         <Meta />
         <Links />
       </head>
@@ -44,22 +55,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <Outlet />
+      <LazyMotion features={() => import("~/lib/motion-features").then((mod) => mod.default)} strict>
+        <Outlet />
+      </LazyMotion>
     </MotionConfig>
   );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let code = 'Error';
-  let title = 'Terjadi kesalahan';
-  let details = 'Maaf, ada masalah yang tidak terduga. Silakan coba lagi.';
+  let code = "Error";
+  let title = "Terjadi kesalahan";
+  let details = "Maaf, ada masalah yang tidak terduga. Silakan coba lagi.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
-      code = '404';
-      title = 'Halaman tidak ditemukan';
-      details = 'Alamat yang Anda buka tidak tersedia atau sudah dipindahkan.';
+      code = "404";
+      title = "Halaman tidak ditemukan";
+      details = "Alamat yang Anda buka tidak tersedia atau sudah dipindahkan.";
     } else {
       code = String(error.status);
       details = error.statusText || details;
@@ -74,7 +87,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       <p className="text-sm font-semibold tracking-widest text-brand">{code}</p>
       <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
       <p className="text-mute">{details}</p>
-      <Link to="/" className="mt-4 inline-flex w-fit rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
+      <Link
+        to="/"
+        className="mt-4 inline-flex w-fit rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+      >
         Kembali ke beranda
       </Link>
       {stack && (

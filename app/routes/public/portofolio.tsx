@@ -1,24 +1,31 @@
 // app/routes/public/portofolio.tsx
 // Daftar portofolio: ?layanan=<id> memfilter, ?halaman=<n> memilih halaman.
-import { PortfolioGridSection } from '~/components/public/portfolio/portfolio-grid-section';
-import { PageHeader } from '~/components/public/shared/section';
-import { publicHeaders } from '~/lib/public-headers';
-import { getPortfolioList } from '~/services/public/portfolio.server';
-import type { Route } from './+types/portofolio';
+import { PortfolioGridSection } from "~/components/public/portfolio/portfolio-grid-section";
+import { PageHeader } from "~/components/public/shared/section";
+import { publicHeaders } from "~/lib/public-headers";
+import { getPortfolioList } from "~/services/public/portfolio.server";
+import type { Route } from "./+types/portofolio";
+import { breadcrumbLd, seoMeta } from "~/lib/seo";
 
 export function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  const page = Number.parseInt(url.searchParams.get('halaman') ?? '1', 10);
+  const page = Number.parseInt(url.searchParams.get("halaman") ?? "1", 10);
   return getPortfolioList({
-    serviceId: url.searchParams.get('layanan'),
+    serviceId: url.searchParams.get("layanan"),
     page: Number.isFinite(page) ? page : 1,
   });
 }
 
 export const headers = publicHeaders;
 
-export function meta() {
-  return [{ title: 'Portofolio | Yohara Gemilang Management' }];
+export function meta({ matches }: Route.MetaArgs) {
+  return seoMeta(matches, {
+    title: "Portofolio",
+    description:
+      "Kumpulan acara yang pernah kami kerjakan, dari gathering perusahaan sampai pernikahan dan konser.",
+    path: "/portofolio",
+    jsonLd: [breadcrumbLd(matches, [{ name: "Beranda", path: "/" }, { name: "Portofolio", path: "/portofolio" }])],
+  });
 }
 
 export default function Portofolio({ loaderData }: Route.ComponentProps) {
