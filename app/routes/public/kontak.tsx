@@ -1,26 +1,40 @@
 // app/routes/public/kontak.tsx
 // Halaman Kontak. Data situs dimuat layout; loader hanya menyiapkan pilihan jenis acara,
 // action menerima formulir (validasi, simpan, kirim email).
-import { ContactSection } from "~/components/public/contact/contact-section";
-import { useSite } from "~/components/public/layout/use-site";
-import { PageHeader } from "~/components/public/shared/section";
-import { publicHeaders } from "~/lib/public-headers";
-import { contactSchema, type ContactResult } from "~/schemas/contact";
-import { fieldErrors, firstErrors } from "~/schemas/common";
-import { getContactOptions, submitContact } from "~/services/public/contact.server";
-import type { Route } from "./+types/kontak";
-import { breadcrumbLd, seoMeta } from "~/lib/seo";
+import { ContactSection } from '~/components/public/contact/contact-section';
+import { useSite } from '~/components/public/layout/use-site';
+import { PageHeader } from '~/components/public/shared/section';
+import { publicHeaders } from '~/lib/public-headers';
+import { contactSchema, type ContactResult } from '~/schemas/contact';
+import { fieldErrors, firstErrors } from '~/schemas/common';
+import { getContactOptions, submitContact } from '~/services/public/contact.server';
+import type { Route } from './+types/kontak';
+import { breadcrumbLd, seoMeta } from '~/lib/seo';
 
 export function loader() {
   return getContactOptions();
 }
 
 export async function action({ request }: Route.ActionArgs): Promise<ContactResult> {
-  const parsed = contactSchema.safeParse(Object.fromEntries(await request.formData()));
+  const raw = Object.fromEntries(await request.formData());
+
+  // Honeypot: kolom "website" tersembunyi dari pengunjung. Kalau terisi, pengirimnya bot:
+  // tampilkan sukses palsu tanpa menyimpan atau mengirim email.
+  if (typeof raw.website === 'string' && raw.website.trim() !== '') {
+    return {
+      ok: true,
+      message: 'Pesan terkirim',
+      name: typeof raw.name === 'string' ? raw.name.slice(0, 80) : '',
+      eventType: typeof raw.eventType === 'string' ? raw.eventType.slice(0, 80) : '',
+      confirmed: false,
+    };
+  }
+
+  const parsed = contactSchema.safeParse(raw);
   if (!parsed.success) {
     return {
       ok: false,
-      message: "Periksa kembali isian Anda.",
+      message: 'Periksa kembali isian Anda.',
       errors: firstErrors(fieldErrors(parsed.error)),
     };
   }
@@ -29,16 +43,16 @@ export async function action({ request }: Route.ActionArgs): Promise<ContactResu
     const { confirmed } = await submitContact(parsed.data, new URL(request.url).origin);
     return {
       ok: true,
-      message: "Pesan terkirim",
+      message: 'Pesan terkirim',
       name: parsed.data.name,
       eventType: parsed.data.eventType,
       confirmed,
     };
   } catch (error) {
-    console.error("[kontak] gagal menyimpan pesan:", error);
+    console.error('[kontak] gagal menyimpan pesan:', error);
     return {
       ok: false,
-      message: "Pesan belum terkirim karena ada gangguan. Silakan coba lagi atau hubungi kami lewat WhatsApp.",
+      message: 'Pesan belum terkirim karena ada gangguan. Silakan coba lagi atau hubungi kami lewat WhatsApp.',
     };
   }
 }
@@ -47,11 +61,15 @@ export const headers = publicHeaders;
 
 export function meta({ matches }: Route.MetaArgs) {
   return seoMeta(matches, {
-    title: "Hubungi kami",
-    description:
-      "Ceritakan rencana acara Anda. Kirim pesan, hubungi lewat WhatsApp, atau kunjungi kantor kami.",
-    path: "/kontak",
-    jsonLd: [breadcrumbLd(matches, [{ name: "Beranda", path: "/" }, { name: "Kontak", path: "/kontak" }])],
+    title: 'Hubungi kami',
+    description: 'Ceritakan rencana acara Anda. Kirim pesan, hubungi lewat WhatsApp, atau kunjungi kantor kami.',
+    path: '/kontak',
+    jsonLd: [
+      breadcrumbLd(matches, [
+        { name: 'Beranda', path: '/' },
+        { name: 'Kontak', path: '/kontak' },
+      ]),
+    ],
   });
 }
 

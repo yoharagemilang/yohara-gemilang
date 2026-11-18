@@ -64,6 +64,13 @@ export function ContactForm({ site, eventTypes }: { site: SiteInfo; eventTypes: 
 
   return (
     <fetcher.Form key={formKey} method="post" action="/kontak" noValidate className="flex flex-1 flex-col">
+      {/* Jebakan bot: pengunjung tidak melihat dan tidak bisa fokus ke kolom ini */}
+      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label>
+          Jangan diisi
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+        </label>
+      </div>
       <FieldGroup className="flex-1 gap-5">
         <Field data-invalid={invalid('name')}>
           <FieldLabel htmlFor="name" className={labelClass}>
