@@ -49,3 +49,12 @@ export async function destroyAdminSession(request: Request) {
   const session = await getSession(request);
   return getStorage().destroySession(session);
 }
+
+/**
+ * Versi awal memakai cookie dengan path "/admin". Cookie lama itu masih valid dan bisa
+ * menahan sesi tetap aktif walau cookie baru (path "/") sudah dihapus. Header ini membersihkannya.
+ */
+export function clearLegacyAdminCookie() {
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
+  return `__yg_admin=; Path=/admin; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax${secure}`;
+}

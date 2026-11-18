@@ -30,6 +30,8 @@ export default function PublicLayout({ loaderData }: Route.ComponentProps) {
       </main>
       <SiteFooter site={site} />
       <WhatsAppButton whatsapp={site.whatsapp} />
+      {/* Statistik pengunjung Umami (tanpa cookie). Hanya halaman publik; data-domains mencegah lalu lintas dari localhost ikut terhitung. */}
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="d92715fe-8bce-4de6-a9ff-2ab6d4496cab" data-domains="yoharagemilang.com,www.yoharagemilang.com" />
       <Toaster richColors closeButton position="top-center" style={{ '--error-text': '#b91c1c' } as CSSProperties} />
     </>
   );

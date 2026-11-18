@@ -1,6 +1,7 @@
 // app/components/admin/app-sidebar.tsx
 import { Briefcase, ChevronsUpDown, ExternalLink, FileText, Folder, Handshake, CircleHelp, Image as ImageIcon, Images, Info, LayoutDashboard, LogOut, Mail, Settings, Users, type LucideIcon } from 'lucide-react';
-import { Link, useLocation, useSubmit } from 'react-router';
+import { useRef } from 'react';
+import { Link, useLocation } from 'react-router';
 
 import { Avatar, AvatarFallback } from '~/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/ui/dropdown-menu';
@@ -48,7 +49,9 @@ function initials(name: string) {
 export function AppSidebar({ admin, newMessages }: { admin: { name: string; email: string }; newMessages: number }) {
   const { pathname } = useLocation();
   const { isMobile, setOpenMobile } = useSidebar();
-  const submit = useSubmit();
+  // Keluar memakai form POST biasa (muat ulang halaman penuh), bukan fetch React Router,
+  // supaya cookie sesi pasti terhapus dan halaman benar-benar pindah ke halaman masuk.
+  const logoutForm = useRef<HTMLFormElement>(null);
 
   return (
     <Sidebar collapsible="icon">
@@ -97,6 +100,7 @@ export function AppSidebar({ admin, newMessages }: { admin: { name: string; emai
       </SidebarContent>
 
       <SidebarFooter>
+        <form ref={logoutForm} method="post" action="/admin/logout" hidden />
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -119,7 +123,7 @@ export function AppSidebar({ admin, newMessages }: { admin: { name: string; emai
                   <ExternalLink />
                   Lihat situs
                 </DropdownMenuItem>
-                <DropdownMenuItem variant="destructive" onClick={() => submit(null, { method: 'post', action: '/admin/logout' })}>
+                <DropdownMenuItem variant="destructive" onClick={() => logoutForm.current?.submit()}>
                   <LogOut />
                   Keluar
                 </DropdownMenuItem>

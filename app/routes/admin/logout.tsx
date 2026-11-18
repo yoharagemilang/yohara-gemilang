@@ -1,7 +1,7 @@
 // app/routes/admin/logout.tsx
 import { redirect } from 'react-router';
 
-import { destroyAdminSession } from '~/lib/session.server';
+import { clearLegacyAdminCookie, destroyAdminSession } from '~/lib/session.server';
 import type { Route } from './+types/logout';
 
 // Logout hanya lewat POST. GET diarahkan ke halaman masuk.
@@ -10,7 +10,8 @@ export function loader() {
 }
 
 export async function action({ request }: Route.ActionArgs) {
-  return redirect('/admin/login', {
-    headers: { 'Set-Cookie': await destroyAdminSession(request) },
-  });
+  const headers = new Headers();
+  headers.append('Set-Cookie', await destroyAdminSession(request));
+  headers.append('Set-Cookie', clearLegacyAdminCookie());
+  return redirect('/admin/login', { headers });
 }
