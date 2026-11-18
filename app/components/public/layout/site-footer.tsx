@@ -1,4 +1,4 @@
-// app/components/public/site-footer.tsx
+// app/components/public/layout/site-footer.tsx
 import { Link } from 'react-router';
 
 import type { SiteInfo } from '~/services/site.server';
@@ -22,7 +22,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
         <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div>
             <LogoMark name={site.companyName} className="size-12 bg-brand text-[1.3rem] md:size-12 md:text-[1.3rem] [&>span]:bg-white" />
-            <h3 className="mt-5 mb-2.5 text-[1.3rem] font-semibold text-white">{site.companyName}</h3>
+            <p className="mt-5 mb-2.5 text-[1.3rem] font-semibold text-white">{site.companyName}</p>
             <p className="max-w-[34ch] text-[0.92rem]">{site.tagline || DEFAULT_TAGLINE}</p>
             {social.length > 0 ? (
               <div className="mt-5 flex flex-wrap gap-2">
@@ -36,7 +36,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
           </div>
 
           <div>
-            <h4 className={colTitle}>Navigasi</h4>
+            <h2 className={colTitle}>Navigasi</h2>
             <ul className="grid gap-3 text-[0.92rem]">
               {publicNav.map((item) => (
                 <li key={item.to}>
@@ -49,7 +49,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
           </div>
 
           <div>
-            <h4 className={colTitle}>Layanan</h4>
+            <h2 className={colTitle}>Layanan</h2>
             <ul className="grid gap-3 text-[0.92rem]">
               {site.serviceNames.map((name) => (
                 <li key={name}>{name}</li>
@@ -58,7 +58,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
           </div>
 
           <div>
-            <h4 className={colTitle}>Kontak</h4>
+            <h2 className={colTitle}>Kontak</h2>
             <ul className="grid gap-3 text-[0.92rem]">
               {site.address ? <li>{site.address}</li> : null}
               {site.phone ? (

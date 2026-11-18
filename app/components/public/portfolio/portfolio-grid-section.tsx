@@ -35,7 +35,7 @@ export function PortfolioGridSection({ data }: { data: Data }) {
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {data.projects.map((p, i) => (
             <Reveal key={p.id} delay={(i % 3) * 0.08}>
-              <PortfolioCard project={p} sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw" className="h-full min-h-85 md:min-h-95" />
+              <PortfolioCard project={p} sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw" headingLevel="h2" className="h-full min-h-85 md:min-h-95" />
             </Reveal>
           ))}
         </div>

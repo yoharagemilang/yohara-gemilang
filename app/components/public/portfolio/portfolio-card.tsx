@@ -17,7 +17,18 @@ export type PortfolioCardItem = {
   cover: PublicMedia | null;
 };
 
-export function PortfolioCard({ project, sizes = '(min-width: 768px) 60vw, 100vw', className }: { project: PortfolioCardItem; sizes?: string; className?: string }) {
+export function PortfolioCard({
+  project,
+  sizes = '(min-width: 768px) 60vw, 100vw',
+  className,
+  headingLevel: H = 'h3',
+}: {
+  project: PortfolioCardItem;
+  sizes?: string;
+  className?: string;
+  /** h2 dipakai di halaman daftar yang tidak punya h2 di atasnya. */
+  headingLevel?: 'h2' | 'h3';
+}) {
   const meta = [project.city, String(project.year), project.guestCount ? `${formatNumberId(project.guestCount)} tamu` : null].filter(Boolean) as string[];
 
   return (
@@ -35,7 +46,7 @@ export function PortfolioCard({ project, sizes = '(min-width: 768px) 60vw, 100vw
       </div>
 
       <div className="absolute inset-x-6 bottom-6 z-10">
-        <h3 className="max-w-[22ch] text-[clamp(1.3rem,2.4vw,1.75rem)] leading-[1.2] font-semibold tracking-[-0.02em]">{project.title}</h3>
+        <H className="max-w-[22ch] text-[clamp(1.3rem,2.4vw,1.75rem)] leading-[1.2] font-semibold tracking-[-0.02em]">{project.title}</H>
         <div className="mt-3.5 flex gap-3.5 border-t border-white/30 pt-3.5 text-[0.84rem] text-white/85">
           {meta.map((m) => (
             <span key={m}>{m}</span>

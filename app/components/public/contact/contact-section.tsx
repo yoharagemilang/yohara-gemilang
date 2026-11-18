@@ -16,7 +16,7 @@ export function ContactSection({ site }: { site: SiteInfo }) {
           <ContactSocials site={site} />
         </Reveal>
         <Reveal delay={0.1}>
-          <ContactMap query={site.mapQuery} title={site.companyName} />
+          <ContactMap query={site.mapQuery} title={site.companyName} address={site.address} />
         </Reveal>
       </div>
     </Container>

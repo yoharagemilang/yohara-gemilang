@@ -7,7 +7,7 @@ export type PartnerItem = { id: string; name: string; logo: PublicMedia | null }
 
 function Item({ partner }: { partner: PartnerItem }) {
   return (
-    <span className="flex items-center px-10 text-xl font-bold tracking-[-0.01em] whitespace-nowrap text-[#a3a29d]">
+    <span className="flex items-center px-10 text-xl font-bold tracking-[-0.01em] whitespace-nowrap text-[#767570]">
       {partner.logo ? <CldImage media={partner.logo} alt={partner.name} widths={[160, 320]} sizes="150px" className="h-9 w-auto max-w-37.5 object-contain opacity-60 grayscale" /> : partner.name}
     </span>
   );

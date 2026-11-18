@@ -25,7 +25,18 @@ function Meta({ article }: { article: ArticleCardItem }) {
 }
 
 /** main: kartu besar dengan ringkasan. side: kartu ringkas, gambar di kiri. */
-export function ArticleCard({ article, variant = 'main', className }: { article: ArticleCardItem; variant?: 'main' | 'side'; className?: string }) {
+export function ArticleCard({
+  article,
+  variant = 'main',
+  className,
+  headingLevel: H = 'h3',
+}: {
+  article: ArticleCardItem;
+  variant?: 'main' | 'side';
+  className?: string;
+  /** h2 dipakai di halaman daftar yang tidak punya h2 di atasnya. */
+  headingLevel?: 'h2' | 'h3';
+}) {
   const main = variant === 'main';
   return (
     <Link to={`/artikel/${article.slug}`} className={cn('group block overflow-hidden rounded-xl border border-line bg-white', !main && 'grid min-[520px]:grid-cols-[150px_1fr]', className)}>
@@ -41,7 +52,7 @@ export function ArticleCard({ article, variant = 'main', className }: { article:
       </div>
       <div className={main ? 'px-7 pt-6 pb-7.5' : 'self-center px-5.5 py-5'}>
         <Meta article={article} />
-        <h3 className={cn('leading-[1.15] font-semibold tracking-[-0.02em] group-hover:text-brand', main ? 'text-[1.65rem]' : 'text-[1.05rem]')}>{article.title}</h3>
+        <H className={cn('leading-[1.15] font-semibold tracking-[-0.02em] group-hover:text-brand', main ? 'text-[1.65rem]' : 'text-[1.05rem]')}>{article.title}</H>
         {main ? <p className="mt-3 max-w-[62ch] text-[0.94rem] text-mute">{article.excerpt}</p> : null}
       </div>
     </Link>

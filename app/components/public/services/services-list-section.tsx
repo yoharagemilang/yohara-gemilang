@@ -20,7 +20,7 @@ export function ServicesListSection({ services }: { services: ServiceView[] }) {
         </div>
       ) : (
         <Reveal>
-          <ServiceGrid services={services} />
+          <ServiceGrid services={services} headingLevel="h2" />
         </Reveal>
       )}
     </Section>

@@ -35,7 +35,7 @@ export function ArticleGridSection({ data }: { data: Data }) {
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data.articles.map((a, i) => (
             <Reveal key={a.id} delay={(i % 3) * 0.08}>
-              <ArticleCard article={a} className="h-full" />
+              <ArticleCard article={a} headingLevel="h2" className="h-full" />
             </Reveal>
           ))}
         </div>
