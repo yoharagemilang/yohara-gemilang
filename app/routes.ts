@@ -8,11 +8,12 @@ export default [
     route('tentang', 'routes/public/tentang.tsx'),
     route('layanan', 'routes/public/layanan.tsx'),
     route('portofolio', 'routes/public/portofolio.tsx'),
+    route('portofolio/:slug', 'routes/public/portofolio-detail.tsx'),
     route('artikel', 'routes/public/artikel.tsx'),
     route('faq', 'routes/public/faq.tsx'),
     route('kontak', 'routes/public/kontak.tsx'),
     route('kebijakan-privasi', 'routes/public/kebijakan-privasi.tsx'),
-    // route('syarat-ketentuan', 'routes/public/syarat-ketentuan.tsx'),
+    route('syarat-ketentuan', 'routes/public/syarat-ketentuan.tsx'),
     route('*', 'routes/public/not-found.tsx'),
   ]),
 
