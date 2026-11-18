@@ -8,10 +8,11 @@ import { cta } from '../shared/cta';
 import { Reveal } from '../shared/reveal';
 import { Eyebrow, Section, h2Class } from '../shared/section';
 
-export function CtaBanner() {
+/** soft=false dipakai bila bagian di atasnya sudah berlatar abu, supaya dua blok abu tidak menyatu. */
+export function CtaBanner({ soft = true }: { soft?: boolean }) {
   const site = useSite();
   return (
-    <Section soft>
+    <Section soft={soft}>
       <Reveal className="grid items-end gap-8 min-[900px]:grid-cols-[1.3fr_1fr] min-[900px]:gap-20">
         <div>
           <Eyebrow>Konsultasi</Eyebrow>

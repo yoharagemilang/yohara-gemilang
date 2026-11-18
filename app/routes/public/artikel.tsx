@@ -1,6 +1,19 @@
 // app/routes/public/artikel.tsx
-import { Container, PageHeader } from '~/components/public/shared/section';
+// Daftar artikel: ?kategori=<nama> memfilter, ?halaman=<n> memilih halaman.
+import { ArticleGridSection } from '~/components/public/articles/article-grid-section';
+import { PageHeader } from '~/components/public/shared/section';
 import { publicHeaders } from '~/lib/public-headers';
+import { getArticleList } from '~/services/public/article.server';
+import type { Route } from './+types/artikel';
+
+export function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  const page = Number.parseInt(url.searchParams.get('halaman') ?? '1', 10);
+  return getArticleList({
+    category: url.searchParams.get('kategori'),
+    page: Number.isFinite(page) ? page : 1,
+  });
+}
 
 export const headers = publicHeaders;
 
@@ -8,11 +21,11 @@ export function meta() {
   return [{ title: 'Artikel | Yohara Gemilang Management' }];
 }
 
-export default function Page() {
+export default function Artikel({ loaderData }: Route.ComponentProps) {
   return (
     <>
-      <PageHeader eyebrow="Artikel" title="Artikel" description="Tips dan cerita seputar penyelenggaraan acara." />
-      <Container className="py-16 text-mute">Isi halaman ini sedang disiapkan.</Container>
+      <PageHeader eyebrow="Artikel" title="Tips dan cerita seputar acara" description="Panduan praktis dari tim kami untuk merencanakan acara." />
+      <ArticleGridSection data={loaderData} />
     </>
   );
 }

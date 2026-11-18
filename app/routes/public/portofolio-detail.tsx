@@ -29,7 +29,7 @@ export default function PortofolioDetail({ loaderData }: Route.ComponentProps) {
       <ProjectBody project={project} />
       <ProjectGallery images={project.gallery} title={project.title} />
       <RelatedProjects projects={related} />
-      <CtaBanner />
+      <CtaBanner soft={related.length === 0} />
     </>
   );
 }

@@ -10,6 +10,7 @@ export default [
     route('portofolio', 'routes/public/portofolio.tsx'),
     route('portofolio/:slug', 'routes/public/portofolio-detail.tsx'),
     route('artikel', 'routes/public/artikel.tsx'),
+    route('artikel/:slug', 'routes/public/artikel-detail.tsx'),
     route('faq', 'routes/public/faq.tsx'),
     route('kontak', 'routes/public/kontak.tsx'),
     route('kebijakan-privasi', 'routes/public/kebijakan-privasi.tsx'),
