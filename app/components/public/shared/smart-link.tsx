@@ -19,7 +19,7 @@ export function SmartLink({ href, children, ...props }: Omit<ComponentProps<"a">
     );
   }
   return (
-    <Link prefetch="intent" to={to} {...props}>
+    <Link prefetch="viewport" to={to} {...props}>
       {children}
     </Link>
   );

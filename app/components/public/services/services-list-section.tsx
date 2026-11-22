@@ -14,7 +14,7 @@ export function ServicesListSection({ services }: { services: ServiceView[] }) {
       {services.length === 0 ? (
         <div className="rounded-xl border border-line p-10 text-center">
           <p className="text-mute">Daftar layanan sedang kami siapkan. Ceritakan kebutuhan acara Anda langsung kepada kami.</p>
-          <Link prefetch="intent" to="/kontak" className={cta("red", "mt-6")}>
+          <Link prefetch="viewport" to="/kontak" className={cta("red", "mt-6")}>
             Hubungi kami
           </Link>
         </div>

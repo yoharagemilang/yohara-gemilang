@@ -25,7 +25,7 @@ export function PortfolioSection({ projects }: { projects: HomeData["projects"] 
           eyebrow="Portofolio"
           title="Proyek pilihan"
           action={
-            <Link prefetch="intent" to="/portofolio" className={cta("line")}>
+            <Link prefetch="viewport" to="/portofolio" className={cta("line")}>
               Lihat semua portofolio
             </Link>
           }

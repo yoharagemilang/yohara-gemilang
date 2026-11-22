@@ -18,7 +18,7 @@ export function FaqSection({ faqs }: { faqs: HomeData["faqs"] }) {
           <p className="mt-3.5 text-mute">
             Tidak menemukan jawabannya? Hubungi kami, biasanya dibalas dalam satu hari kerja.
           </p>
-          <Link prefetch="intent" to="/faq" className={cta("line", "mt-6")}>
+          <Link prefetch="viewport" to="/faq" className={cta("line", "mt-6")}>
             Semua pertanyaan
           </Link>
         </Reveal>

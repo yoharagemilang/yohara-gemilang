@@ -27,7 +27,7 @@ export function PortfolioGridSection({ data }: { data: Data }) {
       {data.projects.length === 0 ? (
         <div className="mt-10 rounded-xl border border-line p-10 text-center">
           <p className="text-mute">Belum ada proyek untuk ditampilkan. Ceritakan acara Anda, kami siap membantu.</p>
-          <Link prefetch="intent" to="/kontak" className={cta("red", "mt-6")}>
+          <Link prefetch="viewport" to="/kontak" className={cta("red", "mt-6")}>
             Hubungi kami
           </Link>
         </div>

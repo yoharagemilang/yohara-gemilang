@@ -53,12 +53,12 @@ export function SiteHeader({ site }: { site: SiteInfo }) {
       )}
     >
       <Container className="flex h-18 items-center justify-between md:h-24">
-        <Link prefetch="intent" to="/" aria-label={`${site.companyName}, ke beranda`} className="flex items-center">
+        <Link prefetch="viewport" to="/" aria-label={`${site.companyName}, ke beranda`} className="flex items-center">
           <LogoMark name={site.companyName} />
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link prefetch="intent" to="/kontak" className={cta("red", "hidden px-6 py-3 text-[0.88rem] md:inline-flex")}>
+          <Link prefetch="viewport" to="/kontak" className={cta("red", "hidden px-6 py-3 text-[0.88rem] md:inline-flex")}>
             Hubungi kami
           </Link>
 
@@ -87,7 +87,7 @@ export function SiteHeader({ site }: { site: SiteInfo }) {
               <nav aria-label="Menu utama" className="flex flex-1 flex-col overflow-y-auto pt-7">
                 {publicNav.map((item) => (
                   <NavLink
-                    prefetch="intent"
+                    prefetch="viewport"
                     key={item.to}
                     to={item.to}
                     end={item.to === "/"}
@@ -106,7 +106,7 @@ export function SiteHeader({ site }: { site: SiteInfo }) {
               <div className="grid gap-1 pt-6 text-[0.9rem] text-mute">
                 {site.phone ? <b className="font-semibold text-ink">{site.phone}</b> : null}
                 {site.email ? <span>{site.email}</span> : null}
-                <Link prefetch="intent" to="/kontak" className={cta("red", "mt-4")}>
+                <Link prefetch="viewport" to="/kontak" className={cta("red", "mt-4")}>
                   Konsultasi gratis
                 </Link>
               </div>

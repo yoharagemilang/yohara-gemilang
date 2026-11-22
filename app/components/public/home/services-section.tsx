@@ -17,7 +17,7 @@ export function ServicesSection({ services }: { services: HomeData["services"] }
           title="Jenis acara yang kami tangani"
           description="Dari acara 50 orang sampai festival ribuan pengunjung."
           action={
-            <Link prefetch="intent" to="/layanan" className={cta("line")}>
+            <Link prefetch="viewport" to="/layanan" className={cta("line")}>
               Semua layanan
             </Link>
           }

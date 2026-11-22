@@ -46,7 +46,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
             <ul className="grid gap-3 text-[0.92rem]">
               {publicNav.map((item) => (
                 <li key={item.to}>
-                  <Link prefetch="intent" to={item.to} className={linkClass}>
+                  <Link prefetch="viewport" to={item.to} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>
@@ -92,7 +92,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
           </span>
           <nav aria-label="Legal" className="flex flex-wrap gap-6">
             {legalNav.map((item) => (
-              <Link prefetch="intent" key={item.to} to={item.to} className={linkClass}>
+              <Link prefetch="viewport" key={item.to} to={item.to} className={linkClass}>
                 {item.label}
               </Link>
             ))}

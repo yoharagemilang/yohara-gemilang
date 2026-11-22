@@ -22,7 +22,7 @@ export function CtaBanner({ soft = true }: { soft?: boolean }) {
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
-          <Link prefetch="intent" to="/kontak" className={cta("red")}>
+          <Link prefetch="viewport" to="/kontak" className={cta("red")}>
             Konsultasi gratis
           </Link>
           {site?.whatsapp ? (

@@ -14,7 +14,7 @@ export function FaqListSection({ faqs }: { faqs: FaqView[] }) {
       {faqs.length === 0 ? (
         <div className="mx-auto max-w-3xl rounded-xl border border-line p-10 text-center">
           <p className="text-mute">Belum ada pertanyaan yang dipublikasikan. Silakan tanyakan langsung kepada kami.</p>
-          <Link prefetch="intent" to="/kontak" className={cta("red", "mt-6")}>
+          <Link prefetch="viewport" to="/kontak" className={cta("red", "mt-6")}>
             Hubungi kami
           </Link>
         </div>

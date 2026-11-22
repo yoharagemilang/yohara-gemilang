@@ -17,7 +17,7 @@ export function ArticlesSection({ articles }: { articles: HomeData["articles"] }
           eyebrow="Artikel"
           title="Artikel terbaru"
           action={
-            <Link prefetch="intent" to="/artikel" className={cta("line")}>
+            <Link prefetch="viewport" to="/artikel" className={cta("line")}>
               Semua artikel
             </Link>
           }
