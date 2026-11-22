@@ -10,26 +10,6 @@ import { cta } from "../shared/cta";
 import { publicNav } from "./nav";
 import { Container } from "../shared/section";
 
-/** Huruf logo: lewati awalan badan usaha, "CV Yohara..." menjadi "Y". */
-function initial(name: string) {
-  return name.replace(/^(cv|pt)\.?\s+/i, "").trim().charAt(0).toUpperCase() || "Y";
-}
-
-export function LogoMark({ name, className }: { name: string; className?: string }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "relative grid size-11 place-items-center rounded-lg bg-ink text-xl font-bold text-white md:size-13 md:text-2xl",
-        className,
-      )}
-    >
-      {initial(name)}
-      <span className="absolute right-1.75 bottom-1.75 size-1.5 rounded-full bg-brand" />
-    </span>
-  );
-}
-
 export function SiteHeader({ site }: { site: SiteInfo }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,7 +34,14 @@ export function SiteHeader({ site }: { site: SiteInfo }) {
     >
       <Container className="flex h-18 items-center justify-between md:h-24">
         <Link prefetch="viewport" to="/" aria-label={`${site.companyName}, ke beranda`} className="flex items-center">
-          <LogoMark name={site.companyName} />
+          <img
+            src="/logo-yg.png"
+            alt=""
+            width={560}
+            height={234}
+            fetchPriority="high"
+            className="h-12 w-auto md:h-16"
+          />
         </Link>
 
         <div className="flex items-center gap-3">

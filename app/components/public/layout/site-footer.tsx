@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import type { SiteInfo } from "~/services/site.server";
 import { DEFAULT_TAGLINE, legalNav, publicNav } from "./nav";
 import { Container } from "../shared/section";
-import { LogoMark } from "./site-header";
 
 const linkClass = "transition-colors hover:text-white";
 const colTitle = "mb-5 text-xs font-semibold tracking-[0.14em] text-white uppercase";
@@ -21,9 +20,15 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
       <Container>
         <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div>
-            <LogoMark name={site.companyName} className="size-12 bg-brand text-[1.3rem] md:size-12 md:text-[1.3rem] [&>span]:bg-white" />
-            <p className="mt-5 mb-2.5 text-[1.3rem] font-semibold text-white">{site.companyName}</p>
-            <p className="max-w-[34ch] text-[0.92rem]">{site.tagline || DEFAULT_TAGLINE}</p>
+            <img
+              src="/logo-yg-light.png"
+              alt={site.companyName}
+              width={560}
+              height={234}
+              loading="lazy"
+              className="h-20 w-auto"
+            />
+            <p className="mt-5 max-w-[34ch] text-[0.92rem]">{site.tagline || DEFAULT_TAGLINE}</p>
             {social.length > 0 ? (
               <div className="mt-5 flex flex-wrap gap-2">
                 {social.map((s) => (
