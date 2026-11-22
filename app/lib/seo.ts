@@ -50,9 +50,15 @@ export function seoMeta(matches: Matches, o: SeoOptions): MetaTag[] {
   const url = `${base}${o.path === "/" ? "" : o.path}` || "/";
   const canonical = o.path === "/" ? `${base}/` : url;
 
-  const img = o.image ?? site?.ogImage ?? null;
+  // Gambar halaman sendiri (cover proyek/artikel) kalau ada, kalau tidak gambar merek bawaan di /og-default.png
+  const img = o.image ?? null;
   const imgUrl =
-    img && cloudName ? cldUrl(cloudName, img.publicId, { w: 1200, h: 630, crop: "fill", gravity: "auto" }) : null;
+    img && cloudName
+      ? cldUrl(cloudName, img.publicId, { w: 1200, h: 630, crop: "fill", gravity: "auto" })
+      : base
+        ? `${base}/og-default.png`
+        : null;
+  const imgAlt = img?.alt || name;
 
   const tags: MetaTag[] = [
     { title },
@@ -70,7 +76,7 @@ export function seoMeta(matches: Matches, o: SeoOptions): MetaTag[] {
           { property: "og:image", content: imgUrl },
           { property: "og:image:width", content: "1200" },
           { property: "og:image:height", content: "630" },
-          ...(img?.alt ? [{ property: "og:image:alt", content: img.alt }] : []),
+          { property: "og:image:alt", content: imgAlt },
         ]
       : []),
     ...(o.type === "article" && o.publishedTime
@@ -99,9 +105,9 @@ export function absoluteUrl(matches: Matches, path: string) {
 }
 
 export function organizationLd(matches: Matches): object | null {
-  const { cloudName, site } = context(matches);
+  const { site } = context(matches);
   if (!site) return null;
-  const logo = site.ogImage && cloudName ? cldUrl(cloudName, site.ogImage.publicId, { w: 1200, h: 630, crop: "fill" }) : undefined;
+  const logo = `${site.siteUrl}/logo-yg.png`;
   const sameAs = [site.instagramUrl, site.linkedinUrl, site.youtubeUrl].filter(Boolean);
   return {
     "@context": "https://schema.org",
@@ -110,7 +116,8 @@ export function organizationLd(matches: Matches): object | null {
     name: site.companyName,
     description: site.seoDescription || site.tagline || undefined,
     url: `${site.siteUrl}/`,
-    image: logo,
+    logo,
+    image: `${site.siteUrl}/og-default.png`,
     telephone: site.phone || undefined,
     email: site.email || undefined,
     address: site.address
