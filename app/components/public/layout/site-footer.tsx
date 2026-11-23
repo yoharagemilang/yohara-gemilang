@@ -18,9 +18,9 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
   return (
     <footer className="bg-ink pt-20 pb-24 text-white/70 md:pb-8">
       <Container>
-        <div className="grid gap-8 border-b border-white/15 pb-14 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div>
-            <img src="/logo-all-light.png" alt={site.companyName} width={560} height={234} loading="lazy" className="h-32 w-auto" />
+            <img src="/logo-all-light.png" alt={site.companyName} width={560} height={233} loading="lazy" className="block h-20 w-auto" />
             <p className="mt-5 max-w-[34ch] text-[0.92rem]">{site.tagline || DEFAULT_TAGLINE}</p>
             {social.length > 0 ? (
               <div className="mt-5 flex flex-wrap gap-2">
