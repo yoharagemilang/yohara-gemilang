@@ -34,3 +34,14 @@ export function moveInOrder(ids: string[], id: string, dir: 'up' | 'down') {
   [next[i], next[j]] = [next[j]!, next[i]!];
   return next;
 }
+
+/** Daftar id dari form (JSON). null bila bentuknya salah. */
+export function parseIds(raw: FormDataEntryValue | null) {
+  try {
+    const v: unknown = JSON.parse(String(raw ?? ''));
+    if (!Array.isArray(v) || v.length > 500 || !v.every((x) => typeof x === 'string' && x)) return null;
+    return [...new Set(v as string[])];
+  } catch {
+    return null;
+  }
+}

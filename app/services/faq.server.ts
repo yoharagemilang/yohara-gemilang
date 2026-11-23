@@ -1,5 +1,4 @@
 // app/services/faq.server.ts
-// app/services/faq.server.ts
 import { db } from '~/lib/db.server';
 import type { FaqInput } from '~/schemas/faq';
 import { moveInOrder } from './helpers.server';
@@ -36,4 +35,8 @@ export async function moveFaq(id: string, dir: 'up' | 'down') {
   );
   if (!next) return;
   await db.$transaction(next.map((fid, index) => db.faq.update({ where: { id: fid }, data: { sortOrder: index } })));
+}
+
+export async function reorderFaqs(ids: string[]) {
+  await db.$transaction(ids.map((id, index) => db.faq.update({ where: { id }, data: { sortOrder: index } })));
 }

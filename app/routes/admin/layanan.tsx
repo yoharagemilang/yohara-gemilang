@@ -1,10 +1,12 @@
 // app/routes/admin/layanan.tsx
-import { ArrowDown, ArrowUp, Pencil, Plus, Trash2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { data, useFetcher } from 'react-router';
-import { toast } from 'sonner';
 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '~/components/ui/alert-dialog';
+import { OrderButtons } from '~/components/admin/order-buttons';
+import { useActionToast } from '~/components/admin/use-action-feedback';
+import { DragHandle, SortableBody, SortableRow, useOptimisticOrder } from '~/components/admin/sortable-table';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent } from '~/components/ui/card';
@@ -15,12 +17,13 @@ import { Input } from '~/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Spinner } from '~/components/ui/spinner';
 import { Switch } from '~/components/ui/switch';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { Table, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
 import { Textarea } from '~/components/ui/textarea';
 import { getServiceIcon, serviceIconOptions } from '~/lib/icons';
 import { fieldErrors, firstErrors } from '~/schemas/common';
 import { serviceSchema } from '~/schemas/service';
-import { createService, deleteService, listServices, moveService, setServicePublished, updateService } from '~/services/service.server';
+import { createService, deleteService, listServices, moveService, reorderServices, setServicePublished, updateService } from '~/services/service.server';
+import { parseIds } from '~/services/helpers.server';
 import type { Route } from './+types/layanan';
 
 export function meta(_: Route.MetaArgs) {
@@ -61,6 +64,13 @@ export async function action({ request }: Route.ActionArgs) {
     return data<ActionResult>({ ok: true, message: 'Layanan ditambahkan' });
   }
 
+  if (intent === 'reorder') {
+    const ids = parseIds(form.get('ids'));
+    if (!ids) return data<ActionResult>({ ok: false, message: 'Urutan tidak valid' }, { status: 400 });
+    await reorderServices(ids);
+    return data<ActionResult>({ ok: true, message: '' });
+  }
+
   if (!id) return data<ActionResult>({ ok: false, message: 'Data tidak valid' }, { status: 400 });
 
   if (intent === 'toggle') {
@@ -85,22 +95,11 @@ export default function AdminLayanan({ loaderData }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionResult>();
   const [editing, setEditing] = useState<Service | 'new' | null>(null);
   const [deleting, setDeleting] = useState<Service | null>(null);
-  const handled = useRef<unknown>(null);
 
-  // Toast sekali per hasil. Tutup dialog form kalau simpan berhasil.
-  useEffect(() => {
-    const result = fetcher.data;
-    if (!result || handled.current === result) return;
-    handled.current = result;
-    if (result.ok) {
-      toast.success(result.message);
-      setEditing(null);
-    } else if (result.message) {
-      toast.error(result.message);
-    }
-  }, [fetcher.data]);
+  useActionToast(fetcher.data, () => setEditing(null));
 
   const submit = (values: Record<string, string>) => fetcher.submit(values, { method: 'post' });
+  const { ordered, reorder, move } = useOptimisticOrder(services, (ids) => submit({ intent: 'reorder', ids: JSON.stringify(ids) }), fetcher.data?.ok === false);
 
   return (
     <div className="space-y-6">
@@ -128,26 +127,22 @@ export default function AdminLayanan({ loaderData }: Route.ComponentProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-24">Urutan</TableHead>
+                  <TableHead className="w-32">Urutan</TableHead>
                   <TableHead>Layanan</TableHead>
                   <TableHead className="w-24">Proyek</TableHead>
                   <TableHead className="w-28">Tampil</TableHead>
                   <TableHead className="w-28 text-right">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {services.map((s, i) => {
+              <SortableBody ids={ordered.map((x) => x.id)} onReorder={reorder}>
+                {ordered.map((s, i) => {
                   const Icon = getServiceIcon(s.iconKey);
                   return (
-                    <TableRow key={s.id}>
+                    <SortableRow key={s.id} id={s.id}>
                       <TableCell>
-                        <div className="flex">
-                          <Button variant="ghost" size="icon-xs" aria-label="Naikkan" disabled={i === 0} onClick={() => submit({ intent: 'move', id: s.id, dir: 'up' })}>
-                            <ArrowUp />
-                          </Button>
-                          <Button variant="ghost" size="icon-xs" aria-label="Turunkan" disabled={i === services.length - 1} onClick={() => submit({ intent: 'move', id: s.id, dir: 'down' })}>
-                            <ArrowDown />
-                          </Button>
+                        <div className="flex items-center gap-1">
+                          <DragHandle label={s.title} />
+                          <OrderButtons index={i} total={ordered.length} onMove={(dir) => move(s.id, dir)} />
                         </div>
                       </TableCell>
                       <TableCell className="whitespace-normal">
@@ -175,10 +170,10 @@ export default function AdminLayanan({ loaderData }: Route.ComponentProps) {
                           <Trash2 />
                         </Button>
                       </TableCell>
-                    </TableRow>
+                    </SortableRow>
                   );
                 })}
-              </TableBody>
+              </SortableBody>
             </Table>
           </CardContent>
         </Card>

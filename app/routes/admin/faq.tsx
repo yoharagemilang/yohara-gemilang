@@ -5,6 +5,7 @@ import { data, useFetcher } from 'react-router';
 
 import { ConfirmDelete } from '~/components/admin/confirm-delete';
 import { OrderButtons } from '~/components/admin/order-buttons';
+import { DragHandle, SortableBody, SortableRow, useOptimisticOrder } from '~/components/admin/sortable-table';
 import { useActionToast, useFreshErrors } from '~/components/admin/use-action-feedback';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent } from '~/components/ui/card';
@@ -14,11 +15,12 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field
 import { Input } from '~/components/ui/input';
 import { Spinner } from '~/components/ui/spinner';
 import { Switch } from '~/components/ui/switch';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { Table, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
 import { Textarea } from '~/components/ui/textarea';
 import { type ActionResult, fieldErrors, firstErrors } from '~/schemas/common';
 import { faqSchema } from '~/schemas/faq';
-import { createFaq, deleteFaq, listFaqs, moveFaq, setFaqPublished, updateFaq } from '~/services/faq.server';
+import { createFaq, deleteFaq, listFaqs, moveFaq, reorderFaqs, setFaqPublished, updateFaq } from '~/services/faq.server';
+import { parseIds } from '~/services/helpers.server';
 import type { Route } from './+types/faq';
 
 export function meta(_: Route.MetaArgs) {
@@ -55,6 +57,13 @@ export async function action({ request }: Route.ActionArgs) {
     return data<ActionResult>({ ok: true, message: 'FAQ ditambahkan' });
   }
 
+  if (intent === 'reorder') {
+    const ids = parseIds(form.get('ids'));
+    if (!ids) return data<ActionResult>({ ok: false, message: 'Urutan tidak valid' }, { status: 400 });
+    await reorderFaqs(ids);
+    return data<ActionResult>({ ok: true, message: '' });
+  }
+
   if (!id) return data<ActionResult>({ ok: false, message: 'Data tidak valid' }, { status: 400 });
 
   if (intent === 'toggle') {
@@ -83,6 +92,7 @@ export default function AdminFaq({ loaderData }: Route.ComponentProps) {
   useActionToast(fetcher.data, () => setEditing(null));
 
   const submit = (values: Record<string, string>) => fetcher.submit(values, { method: 'post' });
+  const { ordered, reorder, move } = useOptimisticOrder(faqs, (ids) => submit({ intent: 'reorder', ids: JSON.stringify(ids) }), fetcher.data?.ok === false);
 
   return (
     <div className="space-y-6">
@@ -110,17 +120,20 @@ export default function AdminFaq({ loaderData }: Route.ComponentProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-24">Urutan</TableHead>
+                  <TableHead className="w-32">Urutan</TableHead>
                   <TableHead>Pertanyaan</TableHead>
                   <TableHead className="w-28">Tampil</TableHead>
                   <TableHead className="w-28 text-right">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {faqs.map((f, i) => (
-                  <TableRow key={f.id}>
+              <SortableBody ids={ordered.map((x) => x.id)} onReorder={reorder}>
+                {ordered.map((f, i) => (
+                  <SortableRow key={f.id} id={f.id}>
                     <TableCell>
-                      <OrderButtons index={i} total={faqs.length} onMove={(dir) => submit({ intent: 'move', id: f.id, dir })} />
+                      <div className="flex items-center gap-1">
+                        <DragHandle label={f.question} />
+                        <OrderButtons index={i} total={ordered.length} onMove={(dir) => move(f.id, dir)} />
+                      </div>
                     </TableCell>
                     <TableCell className="whitespace-normal">
                       <p className="font-medium">{f.question}</p>
@@ -137,9 +150,9 @@ export default function AdminFaq({ loaderData }: Route.ComponentProps) {
                         <Trash2 />
                       </Button>
                     </TableCell>
-                  </TableRow>
+                  </SortableRow>
                 ))}
-              </TableBody>
+              </SortableBody>
             </Table>
           </CardContent>
         </Card>

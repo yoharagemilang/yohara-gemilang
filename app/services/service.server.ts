@@ -1,5 +1,4 @@
 // app/services/service.server.ts
-// app/services/service.server.ts
 import { db } from '~/lib/db.server';
 import type { ServiceInput } from '~/schemas/service';
 
@@ -38,4 +37,8 @@ export async function moveService(id: string, dir: 'up' | 'down') {
   if (i < 0 || j < 0 || j >= all.length) return;
   [all[i], all[j]] = [all[j]!, all[i]!];
   await db.$transaction(all.map((s, index) => db.service.update({ where: { id: s.id }, data: { sortOrder: index } })));
+}
+
+export async function reorderServices(ids: string[]) {
+  await db.$transaction(ids.map((id, index) => db.service.update({ where: { id }, data: { sortOrder: index } })));
 }

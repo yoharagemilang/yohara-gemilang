@@ -6,6 +6,7 @@ import { data, useFetcher } from 'react-router';
 import { ConfirmDelete } from '~/components/admin/confirm-delete';
 import { ImageUploader } from '~/components/admin/image-uploader';
 import { OrderButtons } from '~/components/admin/order-buttons';
+import { DragHandle, SortableBody, SortableRow, useOptimisticOrder } from '~/components/admin/sortable-table';
 import { useActionToast, useFreshErrors } from '~/components/admin/use-action-feedback';
 import { CldImage } from '~/components/cld-image';
 import { Button } from '~/components/ui/button';
@@ -16,12 +17,13 @@ import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '~/c
 import { Input } from '~/components/ui/input';
 import { Spinner } from '~/components/ui/spinner';
 import { Switch } from '~/components/ui/switch';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
+import { Table, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
 import { type ActionResult, fieldErrors, firstErrors } from '~/schemas/common';
 import type { MediaItem } from '~/schemas/media';
 import { partnerSchema } from '~/schemas/partner';
 import { failure } from '~/services/helpers.server';
-import { createPartner, deletePartner, listPartners, movePartner, setPartnerPublished, updatePartner } from '~/services/partner.server';
+import { createPartner, deletePartner, listPartners, movePartner, reorderPartners, setPartnerPublished, updatePartner } from '~/services/partner.server';
+import { parseIds } from '~/services/helpers.server';
 import type { Route } from './+types/partner';
 
 export function meta(_: Route.MetaArgs) {
@@ -56,6 +58,13 @@ export async function action({ request }: Route.ActionArgs) {
     return data<ActionResult>({ ok: true, message: id ? 'Partner diperbarui' : 'Partner ditambahkan' });
   }
 
+  if (intent === 'reorder') {
+    const ids = parseIds(form.get('ids'));
+    if (!ids) return data<ActionResult>({ ok: false, message: 'Urutan tidak valid' }, { status: 400 });
+    await reorderPartners(ids);
+    return data<ActionResult>({ ok: true, message: '' });
+  }
+
   if (!id) return data<ActionResult>({ ok: false, message: 'Data tidak valid' }, { status: 400 });
 
   if (intent === 'toggle') {
@@ -84,6 +93,7 @@ export default function AdminPartner({ loaderData }: Route.ComponentProps) {
   useActionToast(fetcher.data, () => setEditing(null));
 
   const submit = (values: Record<string, string>) => fetcher.submit(values, { method: 'post' });
+  const { ordered, reorder, move } = useOptimisticOrder(partners, (ids) => submit({ intent: 'reorder', ids: JSON.stringify(ids) }), fetcher.data?.ok === false);
 
   return (
     <div className="space-y-6">
@@ -111,17 +121,20 @@ export default function AdminPartner({ loaderData }: Route.ComponentProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-24">Urutan</TableHead>
+                  <TableHead className="w-32">Urutan</TableHead>
                   <TableHead>Partner</TableHead>
                   <TableHead className="w-28">Tampil</TableHead>
                   <TableHead className="w-28 text-right">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {partners.map((p, i) => (
-                  <TableRow key={p.id}>
+              <SortableBody ids={ordered.map((x) => x.id)} onReorder={reorder}>
+                {ordered.map((p, i) => (
+                  <SortableRow key={p.id} id={p.id}>
                     <TableCell>
-                      <OrderButtons index={i} total={partners.length} onMove={(dir) => submit({ intent: 'move', id: p.id, dir })} />
+                      <div className="flex items-center gap-1">
+                        <DragHandle label={p.name} />
+                        <OrderButtons index={i} total={ordered.length} onMove={(dir) => move(p.id, dir)} />
+                      </div>
                     </TableCell>
                     <TableCell className="whitespace-normal">
                       <div className="flex items-center gap-3">
@@ -151,9 +164,9 @@ export default function AdminPartner({ loaderData }: Route.ComponentProps) {
                         <Trash2 />
                       </Button>
                     </TableCell>
-                  </TableRow>
+                  </SortableRow>
                 ))}
-              </TableBody>
+              </SortableBody>
             </Table>
           </CardContent>
         </Card>

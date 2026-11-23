@@ -1,5 +1,4 @@
 // app/services/team.server.ts
-// app/services/team.server.ts
 import { db } from '~/lib/db.server';
 import type { TeamInput } from '~/schemas/team';
 import { getMediaDims, mediaSelect, moveInOrder, type ServiceResult } from './helpers.server';
@@ -59,4 +58,8 @@ export async function moveMember(id: string, dir: 'up' | 'down') {
   );
   if (!next) return;
   await db.$transaction(next.map((mid, index) => db.teamMember.update({ where: { id: mid }, data: { sortOrder: index } })));
+}
+
+export async function reorderMembers(ids: string[]) {
+  await db.$transaction(ids.map((id, index) => db.teamMember.update({ where: { id }, data: { sortOrder: index } })));
 }

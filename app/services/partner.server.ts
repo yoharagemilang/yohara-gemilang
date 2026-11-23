@@ -1,5 +1,4 @@
 // app/services/partner.server.ts
-// app/services/partner.server.ts
 import { db } from '~/lib/db.server';
 import type { PartnerInput } from '~/schemas/partner';
 import { getMediaDims, mediaSelect, moveInOrder, type ServiceResult } from './helpers.server';
@@ -59,4 +58,8 @@ export async function movePartner(id: string, dir: 'up' | 'down') {
   );
   if (!next) return;
   await db.$transaction(next.map((pid, index) => db.partner.update({ where: { id: pid }, data: { sortOrder: index } })));
+}
+
+export async function reorderPartners(ids: string[]) {
+  await db.$transaction(ids.map((id, index) => db.partner.update({ where: { id }, data: { sortOrder: index } })));
 }
