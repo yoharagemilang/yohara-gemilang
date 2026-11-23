@@ -20,7 +20,7 @@ export function SiteFooter({ site }: { site: SiteInfo }) {
       <Container>
         <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div>
-            <img src="/logo-all-light.png" alt={site.companyName} width={560} height={234} loading="lazy" className="h-20 w-auto" />
+            <img src="/logo-all-light.png" alt={site.companyName} width={560} height={234} loading="lazy" className="h-28 w-auto" />
             <p className="mt-5 max-w-[34ch] text-[0.92rem]">{site.tagline || DEFAULT_TAGLINE}</p>
             {social.length > 0 ? (
               <div className="mt-5 flex flex-wrap gap-2">
