@@ -11,7 +11,7 @@ export function ArticlesSection({ articles }: { articles: HomeData['articles'] }
   if (articles.length === 0) return null;
   const [main, ...side] = articles.slice(0, 3);
   return (
-    <Section soft>
+    <Section soft texture="lines">
       <Reveal>
         <SectionHead
           eyebrow="Artikel"

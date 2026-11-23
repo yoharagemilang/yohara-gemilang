@@ -1,9 +1,10 @@
 // app/components/public/contact/contact-info.tsx
 // Kartu kontak: alamat, WhatsApp, telepon, email, jam kerja. Item kosong dilewati.
-import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 import { waLink } from '~/lib/contact';
+import { WhatsAppIcon } from '../shared/whatsapp-icon';
 import type { SiteInfo } from '~/services/site.server';
 
 function Row({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
@@ -14,7 +15,7 @@ function Row({ icon, label, children }: { icon: ReactNode; label: string; childr
       </span>
       <div className="min-w-0">
         <p className="text-[0.8rem] text-mute">{label}</p>
-        <div className="mt-1 text-[0.98rem] font-medium break-words whitespace-pre-line">{children}</div>
+        <div className="mt-1 text-[0.98rem] font-medium wrap-break-word whitespace-pre-line">{children}</div>
       </div>
     </div>
   );
@@ -32,7 +33,7 @@ export function ContactInfo({ site }: { site: SiteInfo }) {
         </Row>
       ) : null}
       {site.whatsapp ? (
-        <Row icon={<MessageCircle {...iconProps} />} label="WhatsApp">
+        <Row icon={<WhatsAppIcon className="size-5" />} label="WhatsApp">
           <a href={waLink(site.whatsapp, 'Halo Yohara Gemilang Management, saya ingin konsultasi acara.')} target="_blank" rel="noopener noreferrer" className={linkClass}>
             {site.whatsapp}
           </a>

@@ -1,4 +1,4 @@
-// app/components/public/cta.ts
+// app/components/public/shared/cta.ts
 // Gaya tombol situs publik di atas buttonVariants milik shadcn: radius kecil, satu aksen merah.
 import { buttonVariants } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
@@ -8,6 +8,8 @@ const base = 'h-auto gap-2 rounded-lg px-6.5 py-3.5 text-[0.92rem] font-semibold
 const tone = {
   red: 'border-0 bg-brand text-white hover:bg-brand-dark',
   dark: 'border-0 bg-ink text-white hover:bg-[#2c2c2c]',
+  white: 'border-0 bg-white text-brand hover:bg-soft focus-visible:outline-white',
+  lineWhite: 'border border-white bg-transparent text-white hover:bg-white hover:text-brand focus-visible:outline-white',
   line: 'border border-ink bg-transparent text-ink hover:bg-ink hover:text-white',
 } as const;
 

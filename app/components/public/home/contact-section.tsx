@@ -11,7 +11,7 @@ export function ContactSection({ eventTypes }: { eventTypes: string[] }) {
   const site = useSite();
   if (!site) return null;
   return (
-    <Section soft id="kontak">
+    <Section soft texture="dots" id="kontak">
       <div className="grid gap-10 min-[960px]:grid-cols-[0.85fr_1.15fr] min-[960px]:gap-14">
         <Reveal>
           <Eyebrow>Kontak</Eyebrow>

@@ -10,16 +10,25 @@ export function Container({ className, ...props }: ComponentProps<'div'>) {
   return <div className={cn('mx-auto w-full max-w-300 px-5 md:px-10', className)} {...props} />;
 }
 
-export function Section({ soft, className, children, ...props }: ComponentProps<'section'> & { soft?: boolean }) {
+const textures = {
+  grid: 'opacity-70 [background-image:linear-gradient(to_right,var(--color-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-line)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_80%)]',
+  dots: '[background-image:radial-gradient(var(--color-line)_1.3px,transparent_1.4px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_62%)]',
+  lines: '[background-image:repeating-linear-gradient(135deg,var(--color-line)_0,var(--color-line)_1px,transparent_1px,transparent_14px)] [mask-image:radial-gradient(ellipse_at_bottom_left,black,transparent_60%)]',
+} as const;
+
+export type Texture = keyof typeof textures;
+
+export function Section({ soft, texture, className, children, ...props }: ComponentProps<'section'> & { soft?: boolean; texture?: Texture }) {
   return (
-    <section className={cn('py-20 md:py-30', soft && 'bg-soft', className)} {...props}>
-      <Container>{children}</Container>
+    <section className={cn('relative py-20 md:py-30', soft && 'bg-soft', texture && 'overflow-hidden', className)} {...props}>
+      {texture ? <div aria-hidden className={cn('pointer-events-none absolute inset-0', textures[texture])} /> : null}
+      <Container className="relative">{children}</Container>
     </section>
   );
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
-  return <span className={cn('mb-3.5 inline-block text-xs font-semibold tracking-[0.14em] text-brand uppercase', className)}>{children}</span>;
+  return <span className={cn('mb-3.5 inline-flex items-center gap-3 text-xs font-semibold tracking-[0.14em] text-brand uppercase before:h-px before:w-6 before:bg-current', className)}>{children}</span>;
 }
 
 /** Kepala bagian: label kecil, judul, deskripsi, dan satu aksi di kanan. */
