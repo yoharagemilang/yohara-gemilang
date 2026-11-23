@@ -29,7 +29,7 @@ export function ServiceCard({
       <span
         aria-hidden
         data-n={String(index + 1).padStart(2, '0')}
-        className="pointer-events-none absolute right-7 -bottom-9 text-[9rem] leading-none font-semibold tracking-[-0.06em] text-ink/[0.05] select-none before:content-[attr(data-n)] md:text-[12rem]"
+        className="pointer-events-none absolute right-7 -bottom-9 text-[9rem] leading-none font-semibold tracking-[-0.06em] text-ink/5 select-none before:content-[attr(data-n)] md:text-[12rem]"
       />
       <Icon aria-hidden className="relative mb-7 size-8 text-brand" strokeWidth={1.3} />
       <H className="relative mb-2.5 text-[1.3rem] leading-[1.15] font-semibold tracking-[-0.02em]">{service.title}</H>

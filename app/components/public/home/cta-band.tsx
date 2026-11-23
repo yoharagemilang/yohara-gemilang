@@ -13,7 +13,7 @@ export function CtaBand() {
     <section className="relative overflow-hidden bg-brand py-16 text-white md:py-24">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 [background-image:linear-gradient(to_right,rgba(255,255,255,0.13)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.13)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_left,black,transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.13)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.13)_1px,transparent_1px)] bg-size-[64px_64px] mask-[linear-gradient(to_left,black,transparent_70%)]"
       />
       <Container className="relative">
         <Reveal className="grid items-end gap-8 min-[900px]:grid-cols-[1.4fr_1fr] min-[900px]:gap-20">

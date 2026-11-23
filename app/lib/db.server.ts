@@ -2,6 +2,7 @@
 import { PrismaNeon } from '@prisma/adapter-neon';
 
 import { PrismaClient } from '~/generated/prisma/client';
+import { timed, timingEnabled } from './timing.server';
 
 function createClient() {
   const connectionString = process.env.DATABASE_URL;
@@ -9,7 +10,13 @@ function createClient() {
     throw new Error('DATABASE_URL is not set');
   }
   const adapter = new PrismaNeon({ connectionString });
-  return new PrismaClient({ adapter });
+  const client = new PrismaClient({ adapter });
+  if (!timingEnabled) return client;
+  return client.$extends({
+    query: {
+      $allOperations: ({ model, operation, args, query }) => timed(`${model ?? 'raw'}_${operation}`, () => query(args)),
+    },
+  }) as unknown as typeof client;
 }
 
 const globalForDb = globalThis as unknown as {

@@ -1,6 +1,7 @@
 // app/routes/admin/logout.tsx
 import { redirect } from 'react-router';
 
+import { forgetAdminSession } from '~/middleware/auth.server';
 import { clearLegacyAdminCookie, destroyAdminSession } from '~/lib/session.server';
 import type { Route } from './+types/logout';
 
@@ -10,6 +11,7 @@ export function loader() {
 }
 
 export async function action({ request }: Route.ActionArgs) {
+  forgetAdminSession();
   const headers = new Headers();
   headers.append('Set-Cookie', await destroyAdminSession(request));
   headers.append('Set-Cookie', clearLegacyAdminCookie());

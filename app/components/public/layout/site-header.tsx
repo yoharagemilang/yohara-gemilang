@@ -58,7 +58,7 @@ export function SiteHeader({ site }: { site: SiteInfo }) {
 
               <nav
                 aria-label="Menu utama"
-                className="flex flex-1 flex-col overflow-y-auto overscroll-contain pt-7 [scrollbar-width:thin] [scrollbar-color:transparent_transparent] hover:[scrollbar-color:#d3d1cc_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent hover:[&::-webkit-scrollbar-thumb]:bg-[#d3d1cc]"
+                className="flex flex-1 flex-col overflow-y-auto overscroll-contain pt-7 scrollbar-thin [scrollbar-color:transparent_transparent] hover:[scrollbar-color:#d3d1cc_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent hover:[&::-webkit-scrollbar-thumb]:bg-[#d3d1cc]"
               >
                 {publicNav.map((item) => (
                   <NavLink

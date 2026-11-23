@@ -4,6 +4,7 @@ import { createContext, redirect, type MiddlewareFunction } from 'react-router';
 
 import { db } from '~/lib/db.server';
 import { getSession } from '~/lib/session.server';
+import { runWithTiming, serverTiming, timingEnabled } from '~/lib/timing.server';
 
 export type AdminUser = {
   id: string;
@@ -20,24 +21,48 @@ const LOCK_MINUTES = 15;
 
 /** Header untuk semua halaman admin: tidak di-cache, tidak diindeks. */
 export const adminHeaders: MiddlewareFunction<Response> = async (_, next) => {
-  const response = await next();
+  const t0 = performance.now();
+  let response: Response;
+  if (timingEnabled) {
+    const { result, entries } = await runWithTiming(() => next());
+    response = result;
+    response.headers.set('Server-Timing', serverTiming(entries, performance.now() - t0));
+  } else {
+    response = await next();
+  }
   response.headers.set('Cache-Control', 'private, no-store');
   response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;
 };
 
-/** Wajib login. Sesi dicek ke database supaya bisa dicabut lewat sessionVersion. */
+const SESSION_TTL_MS = 15_000;
+const sessionCache = new Map<string, { admin: AdminUser; expires: number }>();
+
+/** Hapus hasil cek sesi yang tersimpan, dipanggil saat logout atau sessionVersion berubah. */
+export function forgetAdminSession(id?: string) {
+  if (id) sessionCache.delete(id);
+  else sessionCache.clear();
+}
+
+async function loadAdmin(id: string): Promise<AdminUser | null> {
+  const hit = sessionCache.get(id);
+  if (hit && hit.expires > Date.now()) return hit.admin;
+  const admin = await db.admin.findUnique({
+    where: { id },
+    select: { id: true, email: true, name: true, sessionVersion: true },
+  });
+  if (admin) sessionCache.set(id, { admin, expires: Date.now() + SESSION_TTL_MS });
+  else sessionCache.delete(id);
+  return admin;
+}
+
+/** Wajib login. Sesi dicek ke database (disimpan 15 detik per server) supaya bisa dicabut lewat sessionVersion. */
 export const requireAdmin: MiddlewareFunction<Response> = async ({ request, context }, next) => {
   const session = await getSession(request);
   const adminId = session.get('adminId');
   const version = session.get('sessionVersion');
 
-  const admin = adminId
-    ? await db.admin.findUnique({
-        where: { id: adminId },
-        select: { id: true, email: true, name: true, sessionVersion: true },
-      })
-    : null;
+  const admin = adminId ? await loadAdmin(adminId) : null;
 
   if (!admin || admin.sessionVersion !== version) {
     const url = new URL(request.url);

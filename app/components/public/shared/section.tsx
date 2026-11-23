@@ -11,9 +11,9 @@ export function Container({ className, ...props }: ComponentProps<'div'>) {
 }
 
 const textures = {
-  grid: 'opacity-70 [background-image:linear-gradient(to_right,var(--color-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-line)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_80%)]',
-  dots: '[background-image:radial-gradient(var(--color-line)_1.3px,transparent_1.4px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_62%)]',
-  lines: '[background-image:repeating-linear-gradient(135deg,var(--color-line)_0,var(--color-line)_1px,transparent_1px,transparent_14px)] [mask-image:radial-gradient(ellipse_at_bottom_left,black,transparent_60%)]',
+  grid: 'opacity-70 bg-[linear-gradient(to_right,var(--color-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-line)_1px,transparent_1px)] bg-size-[64px_64px] mask-[linear-gradient(to_bottom,black,transparent_80%)]',
+  dots: 'bg-[radial-gradient(var(--color-line)_1.3px,transparent_1.4px)] bg-size-[22px_22px] mask-[radial-gradient(ellipse_at_top_right,black,transparent_62%)]',
+  lines: 'bg-[repeating-linear-gradient(135deg,var(--color-line)_0,var(--color-line)_1px,transparent_1px,transparent_14px)] mask-[radial-gradient(ellipse_at_bottom_left,black,transparent_60%)]',
 } as const;
 
 export type Texture = keyof typeof textures;
